@@ -1,9 +1,11 @@
 {
   "id": "com.fbnlrz.pvecontrol",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": ">=12.3.0",
   "sdk": 3,
-  "platforms": ["local"],
+  "platforms": [
+    "local"
+  ],
   "name": {
     "en": "PVE-Control",
     "de": "PVE-Control"
@@ -13,10 +15,28 @@
     "de": "Überwache und steuere deine Proxmox-VE-Server, virtuellen Maschinen und Container."
   },
   "tags": {
-    "en": ["proxmox", "pve", "virtualization", "vm", "lxc", "server", "homelab"],
-    "de": ["proxmox", "pve", "virtualisierung", "vm", "lxc", "server", "homelab"]
+    "en": [
+      "proxmox",
+      "pve",
+      "virtualization",
+      "vm",
+      "lxc",
+      "server",
+      "homelab"
+    ],
+    "de": [
+      "proxmox",
+      "pve",
+      "virtualisierung",
+      "vm",
+      "lxc",
+      "server",
+      "homelab"
+    ]
   },
-  "category": ["tools"],
+  "category": [
+    "tools"
+  ],
   "brandColor": "#E57000",
   "permissions": [],
   "images": {
