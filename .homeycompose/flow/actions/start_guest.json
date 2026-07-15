@@ -1,0 +1,12 @@
+{
+  "id": "start_guest",
+  "title": { "en": "Start a VM / container", "de": "VM / Container starten" },
+  "titleFormatted": { "en": "Start [[guest]]", "de": "[[guest]] starten" },
+  "hint": {
+    "en": "Start any VM or container by name, without adding it as a device.",
+    "de": "Startet eine beliebige VM oder einen Container per Name, ohne sie als Gerät hinzuzufügen."
+  },
+  "args": [
+    { "name": "guest", "type": "autocomplete", "placeholder": { "en": "select VM/container", "de": "VM/Container wählen" } }
+  ]
+}

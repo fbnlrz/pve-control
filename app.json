@@ -276,6 +276,56 @@
     ],
     "actions": [
       {
+        "id": "node_shutdown_all",
+        "title": {
+          "en": "Shut down all guests on a node",
+          "de": "Alle Gäste auf einem Node herunterfahren"
+        },
+        "titleFormatted": {
+          "en": "Shut down all guests on [[node]]",
+          "de": "Alle Gäste auf [[node]] herunterfahren"
+        },
+        "hint": {
+          "en": "Gracefully shuts down every running VM and container on the selected node.",
+          "de": "Fährt jede laufende VM und jeden Container auf dem gewählten Node regulär herunter."
+        },
+        "args": [
+          {
+            "name": "node",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select node",
+              "de": "Node wählen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "node_start_all",
+        "title": {
+          "en": "Start all guests on a node",
+          "de": "Alle Gäste auf einem Node starten"
+        },
+        "titleFormatted": {
+          "en": "Start all guests on [[node]]",
+          "de": "Alle Gäste auf [[node]] starten"
+        },
+        "hint": {
+          "en": "Starts every stopped VM and container on the selected node.",
+          "de": "Startet jede gestoppte VM und jeden Container auf dem gewählten Node."
+        },
+        "args": [
+          {
+            "name": "node",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select node",
+              "de": "Node wählen"
+            }
+          }
+        ]
+      },
+      {
         "id": "run_balancer",
         "title": {
           "en": "Run disk balancer now",
@@ -285,6 +335,81 @@
           "en": "Runs one balancing pass immediately, honouring the dry-run setting. Works even while automatic balancing is disabled.",
           "de": "Führt sofort einen Balancing-Durchlauf aus (Dry-Run wird beachtet). Funktioniert auch, wenn das automatische Balancing deaktiviert ist."
         }
+      },
+      {
+        "id": "shutdown_guest",
+        "title": {
+          "en": "Shut down a VM / container",
+          "de": "VM / Container herunterfahren"
+        },
+        "titleFormatted": {
+          "en": "Shut down [[guest]]",
+          "de": "[[guest]] herunterfahren"
+        },
+        "hint": {
+          "en": "Gracefully shut down any VM or container by name.",
+          "de": "Fährt eine beliebige VM oder einen Container per Name regulär herunter."
+        },
+        "args": [
+          {
+            "name": "guest",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select VM/container",
+              "de": "VM/Container wählen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "start_guest",
+        "title": {
+          "en": "Start a VM / container",
+          "de": "VM / Container starten"
+        },
+        "titleFormatted": {
+          "en": "Start [[guest]]",
+          "de": "[[guest]] starten"
+        },
+        "hint": {
+          "en": "Start any VM or container by name, without adding it as a device.",
+          "de": "Startet eine beliebige VM oder einen Container per Name, ohne sie als Gerät hinzuzufügen."
+        },
+        "args": [
+          {
+            "name": "guest",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select VM/container",
+              "de": "VM/Container wählen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "stop_guest",
+        "title": {
+          "en": "Stop a VM / container (force)",
+          "de": "VM / Container stoppen (hart)"
+        },
+        "titleFormatted": {
+          "en": "Stop [[guest]]",
+          "de": "[[guest]] stoppen"
+        },
+        "hint": {
+          "en": "Immediately stop any VM or container by name.",
+          "de": "Stoppt eine beliebige VM oder einen Container per Name sofort."
+        },
+        "args": [
+          {
+            "name": "guest",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select VM/container",
+              "de": "VM/Container wählen"
+            }
+          }
+        ]
       },
       {
         "id": "lxc_start",

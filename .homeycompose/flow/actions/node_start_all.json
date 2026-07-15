@@ -1,0 +1,12 @@
+{
+  "id": "node_start_all",
+  "title": { "en": "Start all guests on a node", "de": "Alle Gäste auf einem Node starten" },
+  "titleFormatted": { "en": "Start all guests on [[node]]", "de": "Alle Gäste auf [[node]] starten" },
+  "hint": {
+    "en": "Starts every stopped VM and container on the selected node.",
+    "de": "Startet jede gestoppte VM und jeden Container auf dem gewählten Node."
+  },
+  "args": [
+    { "name": "node", "type": "autocomplete", "placeholder": { "en": "select node", "de": "Node wählen" } }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "node_shutdown_all",
+  "title": { "en": "Shut down all guests on a node", "de": "Alle Gäste auf einem Node herunterfahren" },
+  "titleFormatted": { "en": "Shut down all guests on [[node]]", "de": "Alle Gäste auf [[node]] herunterfahren" },
+  "hint": {
+    "en": "Gracefully shuts down every running VM and container on the selected node.",
+    "de": "Fährt jede laufende VM und jeden Container auf dem gewählten Node regulär herunter."
+  },
+  "args": [
+    { "name": "node", "type": "autocomplete", "placeholder": { "en": "select node", "de": "Node wählen" } }
+  ]
+}

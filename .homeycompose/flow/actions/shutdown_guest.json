@@ -1,0 +1,12 @@
+{
+  "id": "shutdown_guest",
+  "title": { "en": "Shut down a VM / container", "de": "VM / Container herunterfahren" },
+  "titleFormatted": { "en": "Shut down [[guest]]", "de": "[[guest]] herunterfahren" },
+  "hint": {
+    "en": "Gracefully shut down any VM or container by name.",
+    "de": "Fährt eine beliebige VM oder einen Container per Name regulär herunter."
+  },
+  "args": [
+    { "name": "guest", "type": "autocomplete", "placeholder": { "en": "select VM/container", "de": "VM/Container wählen" } }
+  ]
+}

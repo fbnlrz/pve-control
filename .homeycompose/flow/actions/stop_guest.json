@@ -1,0 +1,12 @@
+{
+  "id": "stop_guest",
+  "title": { "en": "Stop a VM / container (force)", "de": "VM / Container stoppen (hart)" },
+  "titleFormatted": { "en": "Stop [[guest]]", "de": "[[guest]] stoppen" },
+  "hint": {
+    "en": "Immediately stop any VM or container by name.",
+    "de": "Stoppt eine beliebige VM oder einen Container per Name sofort."
+  },
+  "args": [
+    { "name": "guest", "type": "autocomplete", "placeholder": { "en": "select VM/container", "de": "VM/Container wählen" } }
+  ]
+}
