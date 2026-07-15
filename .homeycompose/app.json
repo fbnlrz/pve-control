@@ -54,5 +54,12 @@
   "bugs": {
     "url": "https://github.com/fbnlrz/pve-control/issues"
   },
-  "homeyCommunityTopicId": 157223
+  "homeyCommunityTopicId": 157223,
+  "contributing": {
+    "donate": {
+      "githubSponsors": {
+        "username": "fbnlrz"
+      }
+    }
+  }
 }
