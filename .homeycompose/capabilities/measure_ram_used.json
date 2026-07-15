@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "title": { "en": "Memory used", "de": "Belegter RAM" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": "GB",
+  "decimals": 2,
+  "min": 0,
+  "insights": true
+}

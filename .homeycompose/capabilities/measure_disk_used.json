@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "title": { "en": "Disk used", "de": "Belegter Speicher" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": "GB",
+  "decimals": 1,
+  "min": 0,
+  "insights": true
+}

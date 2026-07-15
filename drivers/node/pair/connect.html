@@ -1,123 +1,156 @@
 <!-- Proxmox connection entry view. Shared across all drivers. -->
 <style>
+  #pve-pair {
+    padding: 4px 2px 16px;
+    color: var(--homey-text-color, #f0f0f0);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  #pve-pair h3 { margin: 0 0 4px; font-size: 17px; }
+  #pve-pair p.sub { margin: 0 0 16px; font-size: 13px; opacity: 0.65; }
   .pve-field { margin-bottom: 14px; }
   .pve-row { display: flex; gap: 10px; }
-  .pve-row .pve-field { flex: 1; }
-  .pve-hint { font-size: 12px; opacity: 0.6; margin-top: 4px; }
-  .pve-error {
-    display: none;
-    color: #fff;
-    background: #e74c3c;
-    border-radius: 6px;
-    padding: 10px 12px;
-    margin-bottom: 14px;
-    font-size: 13px;
+  .pve-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .pve-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    font-size: 15px;
+    border: 1px solid rgba(128, 128, 128, 0.45);
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.10);
+    color: inherit;
+    outline: none;
   }
-  .pve-ok {
-    display: none;
+  .pve-input:focus { border-color: #E57000; }
+  .pve-check { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+  .pve-check input { width: 18px; height: 18px; }
+  .pve-hint { font-size: 12px; opacity: 0.6; margin-top: 5px; }
+  .pve-msg { display: none; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 13px; color: #fff; }
+  .pve-msg.err { background: #e74c3c; }
+  .pve-msg.ok { background: #2ecc71; }
+  .pve-btn {
+    width: 100%;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
     color: #fff;
-    background: #2ecc71;
-    border-radius: 6px;
-    padding: 10px 12px;
-    margin-bottom: 14px;
-    font-size: 13px;
+    background: #E57000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
   }
+  .pve-btn:disabled { opacity: 0.55; cursor: default; }
 </style>
 
-<div class="homey-form-group">
-  <div id="pve-error" class="pve-error"></div>
-  <div id="pve-ok" class="pve-ok"></div>
+<div id="pve-pair">
+  <h3>Proxmox VE</h3>
+  <p class="sub">Enter the connection details and API token.</p>
+
+  <div id="pve-msg" class="pve-msg"></div>
 
   <div class="pve-row">
     <div class="pve-field" style="flex: 3;">
-      <label class="homey-form-label" data-i18n="pair.host">Host / IP address</label>
-      <input id="host" class="homey-form-input" type="text" placeholder="192.168.1.10" />
+      <label class="pve-label">Host / IP address</label>
+      <input id="host" class="pve-input" type="text" placeholder="192.168.1.10" autocomplete="off" />
     </div>
     <div class="pve-field" style="flex: 1;">
-      <label class="homey-form-label" data-i18n="pair.port">Port</label>
-      <input id="port" class="homey-form-input" type="number" value="8006" />
+      <label class="pve-label">Port</label>
+      <input id="port" class="pve-input" type="number" value="8006" />
     </div>
   </div>
 
   <div class="pve-field">
-    <label class="homey-form-label" data-i18n="pair.tokenId">API token ID</label>
-    <input id="tokenId" class="homey-form-input" type="text" placeholder="root@pam!homey" />
-    <div class="pve-hint" data-i18n="pair.tokenIdHint">Format: user@realm!tokenname</div>
+    <label class="pve-label">API token ID</label>
+    <input id="tokenId" class="pve-input" type="text" placeholder="root@pam!homey" autocomplete="off" />
+    <div class="pve-hint">Format: user@realm!tokenname</div>
   </div>
 
   <div class="pve-field">
-    <label class="homey-form-label" data-i18n="pair.tokenSecret">API token secret</label>
-    <input id="tokenSecret" class="homey-form-input" type="password" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+    <label class="pve-label">API token secret</label>
+    <input id="tokenSecret" class="pve-input" type="password" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" />
   </div>
 
   <div class="pve-field">
-    <label class="homey-form-checkbox">
-      <input id="verifyTls" type="checkbox" class="homey-form-checkbox-input" />
-      <span class="homey-form-checkbox-checkmark"></span>
-      <span class="homey-form-checkbox-text" data-i18n="pair.verifyTls">Verify TLS certificate</span>
+    <label class="pve-check">
+      <input id="verifyTls" type="checkbox" />
+      <span>Verify TLS certificate (leave off for self-signed)</span>
     </label>
-    <div class="pve-hint" data-i18n="pair.verifyTlsHint">Leave off for the default self-signed Proxmox certificate.</div>
   </div>
+
+  <button id="pve-connect" class="pve-btn" type="button">Connect</button>
 </div>
 
-<button id="pve-connect" class="homey-button-primary-full" data-i18n="pair.connect">Connect</button>
+<script type="text/javascript">
+  (function () {
+    function $(id) { return document.getElementById(id); }
 
-<script type="application/javascript">
-  function $(id) { return document.getElementById(id); }
-
-  function showError(message) {
-    var el = $('pve-error');
-    el.textContent = message;
-    el.style.display = 'block';
-    $('pve-ok').style.display = 'none';
-  }
-
-  function showOk(message) {
-    var el = $('pve-ok');
-    el.textContent = message;
-    el.style.display = 'block';
-    $('pve-error').style.display = 'none';
-  }
-
-  function collect() {
-    return {
-      host: $('host').value.trim(),
-      port: parseInt($('port').value, 10) || 8006,
-      tokenId: $('tokenId').value.trim(),
-      tokenSecret: $('tokenSecret').value.trim(),
-      verifyTls: $('verifyTls').checked,
-    };
-  }
-
-  Homey.emit('getDefaults').then(function (d) {
-    if (!d) return;
-    if (d.host) $('host').value = d.host;
-    if (d.port) $('port').value = d.port;
-    if (d.tokenId) $('tokenId').value = d.tokenId;
-    if (d.tokenSecret) $('tokenSecret').value = d.tokenSecret;
-    $('verifyTls').checked = !!d.verifyTls;
-  }).catch(function () {});
-
-  $('pve-connect').addEventListener('click', function () {
-    var creds = collect();
-    if (!creds.host || !creds.tokenId || !creds.tokenSecret) {
-      showError(Homey.__('pair.missingFields'));
-      return;
+    function showMsg(text, kind) {
+      var el = $('pve-msg');
+      if (!el) return;
+      el.textContent = text;
+      el.className = 'pve-msg ' + kind;
+      el.style.display = 'block';
     }
-    $('pve-connect').disabled = true;
-    Homey.showLoadingOverlay();
-    Homey.emit('validate', creds)
-      .then(function (res) {
-        Homey.hideLoadingOverlay();
-        showOk(Homey.__('pair.connected') + ' ' + (res && res.version ? res.version : ''));
-        Homey.showView('list_devices');
-      })
-      .catch(function (err) {
-        Homey.hideLoadingOverlay();
-        $('pve-connect').disabled = false;
-        showError((err && err.message) ? err.message : String(err));
-      });
-  });
 
-  Homey.ready();
+    // Works whether Homey.emit returns a Promise (SDK3) or uses a callback.
+    function emitAsync(event, data) {
+      return new Promise(function (resolve, reject) {
+        try {
+          var p = Homey.emit(event, data, function (err, result) {
+            if (err) reject(err); else resolve(result);
+          });
+          if (p && typeof p.then === 'function') p.then(resolve, reject);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+
+    function collect() {
+      return {
+        host: $('host').value.trim(),
+        port: parseInt($('port').value, 10) || 8006,
+        tokenId: $('tokenId').value.trim(),
+        tokenSecret: $('tokenSecret').value.trim(),
+        verifyTls: $('verifyTls').checked
+      };
+    }
+
+    function onConnect() {
+      var creds = collect();
+      if (!creds.host || !creds.tokenId || !creds.tokenSecret) {
+        showMsg('Please fill in host, token ID and token secret.', 'err');
+        return;
+      }
+      var btn = $('pve-connect');
+      btn.disabled = true;
+      btn.textContent = 'Connecting…';
+      emitAsync('validate', creds).then(function (res) {
+        showMsg('Connected to Proxmox VE ' + ((res && res.version) ? res.version : ''), 'ok');
+        Homey.showView('list_devices');
+      }).catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = 'Connect';
+        showMsg((err && err.message) ? err.message : String(err), 'err');
+      });
+    }
+
+    // Set up the view, then ALWAYS signal ready so it can never stay blank.
+    try {
+      $('pve-connect').addEventListener('click', onConnect);
+
+      emitAsync('getDefaults').then(function (d) {
+        if (!d) return;
+        if (d.host) $('host').value = d.host;
+        if (d.port) $('port').value = d.port;
+        if (d.tokenId) $('tokenId').value = d.tokenId;
+        if (d.tokenSecret) $('tokenSecret').value = d.tokenSecret;
+        $('verifyTls').checked = !!d.verifyTls;
+      }).catch(function () { /* defaults are optional */ });
+    } catch (e) {
+      // ignore setup errors
+    } finally {
+      try { Homey.ready(); } catch (e) { /* noop */ }
+    }
+  })();
 </script>

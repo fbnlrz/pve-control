@@ -770,6 +770,7 @@
         "pve_status",
         "measure_cpu",
         "measure_memory",
+        "measure_ram_used",
         "measure_disk",
         "measure_netin",
         "measure_netout",
@@ -923,6 +924,7 @@
         "pve_status",
         "measure_cpu",
         "measure_memory",
+        "measure_ram_used",
         "measure_disk",
         "measure_swap",
         "measure_load",
@@ -1069,6 +1071,7 @@
         "pve_status",
         "measure_cpu",
         "measure_memory",
+        "measure_ram_used",
         "measure_disk",
         "measure_netin",
         "measure_netout",
@@ -1220,7 +1223,9 @@
       "class": "other",
       "capabilities": [
         "pve_status",
-        "measure_disk"
+        "measure_disk",
+        "measure_disk_used",
+        "measure_disk_free"
       ],
       "platforms": [
         "local"
@@ -1394,6 +1399,34 @@
       "max": 100,
       "insights": true
     },
+    "measure_disk_free": {
+      "type": "number",
+      "title": {
+        "en": "Disk free",
+        "de": "Freier Speicher"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "GB",
+      "decimals": 1,
+      "min": 0,
+      "insights": true
+    },
+    "measure_disk_used": {
+      "type": "number",
+      "title": {
+        "en": "Disk used",
+        "de": "Belegter Speicher"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "GB",
+      "decimals": 1,
+      "min": 0,
+      "insights": true
+    },
     "measure_load": {
       "type": "number",
       "title": {
@@ -1446,6 +1479,20 @@
       "getable": true,
       "setable": false,
       "units": "Mbit/s",
+      "decimals": 2,
+      "min": 0,
+      "insights": true
+    },
+    "measure_ram_used": {
+      "type": "number",
+      "title": {
+        "en": "Memory used",
+        "de": "Belegter RAM"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "GB",
       "decimals": 2,
       "min": 0,
       "insights": true

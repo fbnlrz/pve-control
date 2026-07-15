@@ -3,7 +3,9 @@
   "class": "other",
   "capabilities": [
     "pve_status",
-    "measure_disk"
+    "measure_disk",
+    "measure_disk_used",
+    "measure_disk_free"
   ],
   "platforms": ["local"],
   "connectivity": ["lan"],

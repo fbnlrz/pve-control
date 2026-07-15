@@ -5,6 +5,7 @@
     "pve_status",
     "measure_cpu",
     "measure_memory",
+    "measure_ram_used",
     "measure_disk",
     "measure_swap",
     "measure_load",
