@@ -13,7 +13,8 @@
     "measure_netout",
     "measure_diskread",
     "measure_diskwrite",
-    "uptime_text"
+    "uptime_text",
+    "last_backup"
   ],
   "capabilitiesOptions": {
     "onoff": {

@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "title": { "en": "Last backup", "de": "Letztes Backup" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": false,
+  "icon": "/assets/capabilities/clock.svg"
+}

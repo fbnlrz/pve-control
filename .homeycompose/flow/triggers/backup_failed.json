@@ -1,0 +1,13 @@
+{
+  "id": "backup_failed",
+  "title": { "en": "A backup failed", "de": "Ein Backup ist fehlgeschlagen" },
+  "hint": {
+    "en": "Triggers when a vzdump backup task finishes with an error.",
+    "de": "Wird ausgelöst, wenn eine vzdump-Backup-Aufgabe mit einem Fehler endet."
+  },
+  "tokens": [
+    { "name": "vmid", "type": "number", "title": { "en": "VMID", "de": "VMID" }, "example": 100 },
+    { "name": "node", "type": "string", "title": { "en": "Node", "de": "Node" }, "example": "pve" },
+    { "name": "error", "type": "string", "title": { "en": "Error", "de": "Fehler" }, "example": "job failed" }
+  ]
+}

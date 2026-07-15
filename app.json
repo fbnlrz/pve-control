@@ -54,6 +54,86 @@
   "flow": {
     "triggers": [
       {
+        "id": "backup_completed",
+        "title": {
+          "en": "A backup completed",
+          "de": "Ein Backup wurde abgeschlossen"
+        },
+        "hint": {
+          "en": "Triggers when a new backup file appears for a VM or container.",
+          "de": "Wird ausgelöst, wenn eine neue Backup-Datei für eine VM oder einen Container erscheint."
+        },
+        "tokens": [
+          {
+            "name": "guest",
+            "type": "string",
+            "title": {
+              "en": "Guest",
+              "de": "Gast"
+            },
+            "example": "web-vm"
+          },
+          {
+            "name": "vmid",
+            "type": "number",
+            "title": {
+              "en": "VMID",
+              "de": "VMID"
+            },
+            "example": 100
+          },
+          {
+            "name": "storage",
+            "type": "string",
+            "title": {
+              "en": "Storage",
+              "de": "Storage"
+            },
+            "example": "backup-nfs"
+          }
+        ]
+      },
+      {
+        "id": "backup_failed",
+        "title": {
+          "en": "A backup failed",
+          "de": "Ein Backup ist fehlgeschlagen"
+        },
+        "hint": {
+          "en": "Triggers when a vzdump backup task finishes with an error.",
+          "de": "Wird ausgelöst, wenn eine vzdump-Backup-Aufgabe mit einem Fehler endet."
+        },
+        "tokens": [
+          {
+            "name": "vmid",
+            "type": "number",
+            "title": {
+              "en": "VMID",
+              "de": "VMID"
+            },
+            "example": 100
+          },
+          {
+            "name": "node",
+            "type": "string",
+            "title": {
+              "en": "Node",
+              "de": "Node"
+            },
+            "example": "pve"
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "de": "Fehler"
+            },
+            "example": "job failed"
+          }
+        ]
+      },
+      {
         "id": "disk_moved",
         "title": {
           "en": "A disk was moved",
@@ -557,6 +637,59 @@
         ]
       },
       {
+        "id": "lxc_backup",
+        "title": {
+          "en": "Create backup",
+          "de": "Backup erstellen"
+        },
+        "titleFormatted": {
+          "en": "Back up to [[storage]] (mode [[mode]])",
+          "de": "Backup auf [[storage]] (Modus [[mode]])"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          },
+          {
+            "name": "storage",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "backup storage",
+              "de": "Backup-Storage"
+            }
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "snapshot",
+                "label": {
+                  "en": "Snapshot (no downtime)",
+                  "de": "Snapshot (ohne Ausfall)"
+                }
+              },
+              {
+                "id": "suspend",
+                "label": {
+                  "en": "Suspend",
+                  "de": "Anhalten"
+                }
+              },
+              {
+                "id": "stop",
+                "label": {
+                  "en": "Stop",
+                  "de": "Stoppen"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "lxc_move_volume",
         "title": {
           "en": "Move volume to storage",
@@ -795,6 +928,59 @@
               "en": "select snapshot",
               "de": "Snapshot wählen"
             }
+          }
+        ]
+      },
+      {
+        "id": "qemu_backup",
+        "title": {
+          "en": "Create backup",
+          "de": "Backup erstellen"
+        },
+        "titleFormatted": {
+          "en": "Back up to [[storage]] (mode [[mode]])",
+          "de": "Backup auf [[storage]] (Modus [[mode]])"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          },
+          {
+            "name": "storage",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "backup storage",
+              "de": "Backup-Storage"
+            }
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "snapshot",
+                "label": {
+                  "en": "Snapshot (no downtime)",
+                  "de": "Snapshot (ohne Ausfall)"
+                }
+              },
+              {
+                "id": "suspend",
+                "label": {
+                  "en": "Suspend",
+                  "de": "Anhalten"
+                }
+              },
+              {
+                "id": "stop",
+                "label": {
+                  "en": "Stop",
+                  "de": "Stoppen"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1061,7 +1247,8 @@
         "measure_netout",
         "measure_diskread",
         "measure_diskwrite",
-        "uptime_text"
+        "uptime_text",
+        "last_backup"
       ],
       "capabilitiesOptions": {
         "onoff": {
@@ -1365,7 +1552,8 @@
         "measure_netout",
         "measure_diskread",
         "measure_diskwrite",
-        "uptime_text"
+        "uptime_text",
+        "last_backup"
       ],
       "capabilitiesOptions": {
         "onoff": {
@@ -1671,6 +1859,18 @@
       "setable": false,
       "insights": false,
       "icon": "/assets/capabilities/globe.svg"
+    },
+    "last_backup": {
+      "type": "string",
+      "title": {
+        "en": "Last backup",
+        "de": "Letztes Backup"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "icon": "/assets/capabilities/clock.svg"
     },
     "measure_cpu": {
       "type": "number",

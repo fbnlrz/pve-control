@@ -57,6 +57,26 @@
       ]
     },
     {
+      "id": "qemu_backup",
+      "title": { "en": "Create backup", "de": "Backup erstellen" },
+      "titleFormatted": {
+        "en": "Back up to [[storage]] (mode [[mode]])",
+        "de": "Backup auf [[storage]] (Modus [[mode]])"
+      },
+      "args": [
+        { "name": "storage", "type": "autocomplete", "placeholder": { "en": "backup storage", "de": "Backup-Storage" } },
+        {
+          "name": "mode",
+          "type": "dropdown",
+          "values": [
+            { "id": "snapshot", "label": { "en": "Snapshot (no downtime)", "de": "Snapshot (ohne Ausfall)" } },
+            { "id": "suspend", "label": { "en": "Suspend", "de": "Anhalten" } },
+            { "id": "stop", "label": { "en": "Stop", "de": "Stoppen" } }
+          ]
+        }
+      ]
+    },
+    {
       "id": "qemu_move_disk",
       "title": { "en": "Move disk to storage", "de": "Disk auf Storage verschieben" },
       "titleFormatted": {

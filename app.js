@@ -145,14 +145,26 @@ class PveControlApp extends Homey.App {
    * Fire the app-level "a disk was moved" Flow trigger.
    * @param {object} tokens { guest, vmid, disk, from, to }
    */
-  triggerDiskMoved(tokens) {
+  _fireTrigger(cardId, tokens) {
     try {
-      this.homey.flow.getTriggerCard('disk_moved')
+      this.homey.flow.getTriggerCard(cardId)
         .trigger(tokens)
-        .catch((err) => this.error('disk_moved trigger', err.message));
+        .catch((err) => this.error(`${cardId} trigger`, err.message));
     } catch (err) {
-      this.error('disk_moved trigger', err.message);
+      this.error(`${cardId} trigger`, err.message);
     }
+  }
+
+  triggerDiskMoved(tokens) {
+    this._fireTrigger('disk_moved', tokens);
+  }
+
+  triggerBackupCompleted(tokens) {
+    this._fireTrigger('backup_completed', tokens);
+  }
+
+  triggerBackupFailed(tokens) {
+    this._fireTrigger('backup_failed', tokens);
   }
 
   async onUninit() {

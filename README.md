@@ -7,8 +7,13 @@ servers, virtual machines and LXC containers over the Proxmox REST API.
 
 | Device | Sensors | Control |
 | --- | --- | --- |
-| **Virtual Machine** (QEMU) | status, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot, **move disk to storage** |
-| **LXC Container** | status, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot, **move volume to storage** |
+| **Virtual Machine** (QEMU) | status, IP, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime, last backup | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot, **move disk to storage**, **create backup** |
+| **LXC Container** | status, IP, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime, last backup | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot, **move volume to storage**, **create backup** |
+
+**App-level & bulk Flow actions:** start / shut down / stop any guest by name
+(no pairing), start all / shut down all guests on a node, and run the disk
+balancer on demand. **Backup triggers:** *a backup completed* / *a backup
+failed*.
 | **Node** (host) | status, CPU, memory (%/GB), disk, swap, load average, running VMs, uptime | reboot, shutdown (via Flow) |
 | **Storage** | status, usage (%), used/free (GB) | – |
 | **Cluster** | quorum alarm, aggregate CPU/memory, running VMs/containers | – |
