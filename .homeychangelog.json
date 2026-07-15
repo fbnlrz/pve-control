@@ -9,5 +9,8 @@
   },
   "1.2.0": {
     "en": "changes to be in homey app store guidelines (pictures, text etc.) "
+  },
+  "1.2.1": {
+    "en": "added sponsors link and workflow"
   }
 }
