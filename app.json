@@ -274,63 +274,18 @@
         ]
       }
     ],
-    "conditions": [
-      {
-        "id": "is_quorate",
-        "title": {
-          "en": "Is quorate",
-          "de": "Hat Quorum"
-        },
-        "titleFormatted": {
-          "en": "Cluster !{{is|isn't}} quorate",
-          "de": "Cluster !{{hat|hat kein}} Quorum"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=cluster"
-          }
-        ]
-      },
-      {
-        "id": "lxc_is_running",
-        "title": {
-          "en": "Is running",
-          "de": "Läuft"
-        },
-        "titleFormatted": {
-          "en": "Container !{{is|isn't}} running",
-          "de": "Container !{{läuft|läuft nicht}}"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=lxc"
-          }
-        ]
-      },
-      {
-        "id": "qemu_is_running",
-        "title": {
-          "en": "Is running",
-          "de": "Läuft"
-        },
-        "titleFormatted": {
-          "en": "VM !{{is|isn't}} running",
-          "de": "VM !{{läuft|läuft nicht}}"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=qemu"
-          }
-        ]
-      }
-    ],
     "actions": [
+      {
+        "id": "run_balancer",
+        "title": {
+          "en": "Run disk balancer now",
+          "de": "Disk-Balancer jetzt ausführen"
+        },
+        "hint": {
+          "en": "Runs one balancing pass immediately, honouring the dry-run setting. Works even while automatic balancing is disabled.",
+          "de": "Führt sofort einen Balancing-Durchlauf aus (Dry-Run wird beachtet). Funktioniert auch, wenn das automatische Balancing deaktiviert ist."
+        }
+      },
       {
         "id": "lxc_start",
         "title": {
@@ -758,6 +713,62 @@
               "en": "Delete source",
               "de": "Quelle löschen"
             }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_quorate",
+        "title": {
+          "en": "Is quorate",
+          "de": "Hat Quorum"
+        },
+        "titleFormatted": {
+          "en": "Cluster !{{is|isn't}} quorate",
+          "de": "Cluster !{{hat|hat kein}} Quorum"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=cluster"
+          }
+        ]
+      },
+      {
+        "id": "lxc_is_running",
+        "title": {
+          "en": "Is running",
+          "de": "Läuft"
+        },
+        "titleFormatted": {
+          "en": "Container !{{is|isn't}} running",
+          "de": "Container !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "qemu_is_running",
+        "title": {
+          "en": "Is running",
+          "de": "Läuft"
+        },
+        "titleFormatted": {
+          "en": "VM !{{is|isn't}} running",
+          "de": "VM !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
           }
         ]
       }

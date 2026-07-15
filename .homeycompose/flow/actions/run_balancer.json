@@ -1,0 +1,8 @@
+{
+  "id": "run_balancer",
+  "title": { "en": "Run disk balancer now", "de": "Disk-Balancer jetzt ausführen" },
+  "hint": {
+    "en": "Runs one balancing pass immediately, honouring the dry-run setting. Works even while automatic balancing is disabled.",
+    "de": "Führt sofort einen Balancing-Durchlauf aus (Dry-Run wird beachtet). Funktioniert auch, wenn das automatische Balancing deaktiviert ist."
+  }
+}

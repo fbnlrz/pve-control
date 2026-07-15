@@ -19,7 +19,20 @@ class PveControlApp extends Homey.App {
     this.balancer = new DiskBalancer(this.homey, this.connections);
     this.balancer.start();
 
+    this._registerBalancerAction();
+
     this.log('Proxmox VE app has been initialized');
+  }
+
+  _registerBalancerAction() {
+    try {
+      this.homey.flow.getActionCard('run_balancer').registerRunListener(async () => {
+        await this.balancer.runOnce(true);
+        return true;
+      });
+    } catch (err) {
+      this.error('run_balancer registration', err.message);
+    }
   }
 
   /**
