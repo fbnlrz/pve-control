@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--homey-text-color);
+      font-family: var(--homey-font-family, -apple-system, "Segoe UI", Roboto, sans-serif);
+      padding: var(--homey-su-3, 12px);
+      box-sizing: border-box;
+    }
+    .head {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--homey-text-color-light); margin-bottom: 10px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; background: var(--homey-color-green, #2ecc71); }
+    .dot.off { background: var(--homey-color-red, #e74c3c); }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 14px; }
+    .tile .val { font-size: 20px; font-weight: 700; line-height: 1.1; }
+    .tile .lbl { font-size: 11px; color: var(--homey-text-color-light); }
+    .bar { height: 5px; border-radius: 3px; background: var(--homey-color-mono-200, rgba(128,128,128,.25)); margin-top: 5px; overflow: hidden; }
+    .bar > span { display: block; height: 100%; background: var(--homey-color-blue, #3b82f6); }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <span><span id="dot" class="dot"></span><span id="nodes">–</span></span>
+    <span id="err" style="color: var(--homey-color-red, #e74c3c);"></span>
+  </div>
+  <div class="grid">
+    <div class="tile"><div class="val" id="vms">–</div><div class="lbl" data-t="vms">Running VMs</div></div>
+    <div class="tile"><div class="val" id="cts">–</div><div class="lbl" data-t="cts">Running containers</div></div>
+    <div class="tile"><div class="val" id="cpu">–</div><div class="lbl" data-t="cpu">CPU</div><div class="bar"><span id="cpubar"></span></div></div>
+    <div class="tile"><div class="val" id="mem">–</div><div class="lbl" data-t="mem">Memory</div><div class="bar"><span id="membar"></span></div></div>
+  </div>
+
+  <script>
+    function onHomeyReady(Homey) {
+      var settings = Homey.getSettings() || {};
+      var refresh = Math.max(5, parseInt(settings.refresh, 10) || 30);
+
+      // Simple localization
+      var t = {
+        vms: Homey.__('widget.vms') || 'Running VMs',
+        cts: Homey.__('widget.cts') || 'Running containers',
+        cpu: 'CPU', mem: Homey.__('widget.mem') || 'Memory'
+      };
+      document.querySelectorAll('[data-t]').forEach(function (el) {
+        var k = el.getAttribute('data-t'); if (t[k]) el.textContent = t[k];
+      });
+
+      function set(id, v) { document.getElementById(id).textContent = v; }
+
+      function render(o) {
+        document.getElementById('err').textContent = '';
+        document.getElementById('dot').className = 'dot' + (o.nodesOnline < o.nodesTotal ? ' off' : '');
+        set('nodes', o.nodesOnline + '/' + o.nodesTotal + ' ' + (Homey.__('widget.nodes') || 'nodes'));
+        set('vms', o.vmsRunning + ' / ' + o.vmsTotal);
+        set('cts', o.ctsRunning + ' / ' + o.ctsTotal);
+        set('cpu', o.cpu + '%');
+        set('mem', o.mem + '%');
+        document.getElementById('cpubar').style.width = Math.min(100, o.cpu) + '%';
+        document.getElementById('membar').style.width = Math.min(100, o.mem) + '%';
+      }
+
+      function update() {
+        Homey.api('GET', '/')
+          .then(render)
+          .catch(function (e) {
+            document.getElementById('err').textContent = (e && e.message) ? e.message : 'error';
+          });
+      }
+
+      update();
+      setInterval(update, refresh * 1000);
+
+      Homey.ready();
+    }
+  </script>
+</body>
+</html>

@@ -25,6 +25,56 @@ class PveControlApp extends Homey.App {
     this.log('PVE-Control app has been initialized');
   }
 
+  /**
+   * Aggregate overview across all connections, computed from the cached
+   * `/cluster/resources` snapshots (no live API call). Used by the widget.
+   */
+  getOverview() {
+    let nodesOnline = 0;
+    let nodesTotal = 0;
+    let vmsRunning = 0;
+    let vmsTotal = 0;
+    let ctsRunning = 0;
+    let ctsTotal = 0;
+    let cpuUsedCores = 0;
+    let cpuTotalCores = 0;
+    let memUsed = 0;
+    let memTotal = 0;
+
+    for (const connection of this.connections.connections.values()) {
+      for (const r of connection.lastResources || []) {
+        if (r.type === 'node') {
+          nodesTotal += 1;
+          if (r.status === 'online') {
+            nodesOnline += 1;
+            const cores = r.maxcpu || 1;
+            cpuUsedCores += (r.cpu || 0) * cores;
+            cpuTotalCores += cores;
+            memUsed += r.mem || 0;
+            memTotal += r.maxmem || 0;
+          }
+        } else if (r.type === 'qemu' && !r.template) {
+          vmsTotal += 1;
+          if (r.status === 'running') vmsRunning += 1;
+        } else if (r.type === 'lxc' && !r.template) {
+          ctsTotal += 1;
+          if (r.status === 'running') ctsRunning += 1;
+        }
+      }
+    }
+
+    return {
+      nodesOnline,
+      nodesTotal,
+      vmsRunning,
+      vmsTotal,
+      ctsRunning,
+      ctsTotal,
+      cpu: cpuTotalCores ? Math.round((cpuUsedCores / cpuTotalCores) * 100) : 0,
+      mem: memTotal ? Math.round((memUsed / memTotal) * 100) : 0,
+    };
+  }
+
   /* ----------------------------------------------------------------------- */
   /* App-level guest / bulk actions (no device needed)                       */
   /* ----------------------------------------------------------------------- */

@@ -38,5 +38,11 @@
       "exclude": "Never move onto these storages",
       "excludeHint": "Comma-separated storage names to exclude as a move target."
     }
+  },
+  "widget": {
+    "nodes": "nodes",
+    "vms": "Running VMs",
+    "cts": "Running containers",
+    "mem": "Memory"
   }
 }

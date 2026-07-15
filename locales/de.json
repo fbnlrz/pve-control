@@ -38,5 +38,11 @@
       "exclude": "Nie auf diese Storages verschieben",
       "excludeHint": "Kommagetrennte Storage-Namen, die als Ziel ausgeschlossen werden."
     }
+  },
+  "widget": {
+    "nodes": "Nodes",
+    "vms": "Laufende VMs",
+    "cts": "Laufende Container",
+    "mem": "Speicher"
   }
 }
