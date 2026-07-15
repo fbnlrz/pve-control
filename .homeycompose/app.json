@@ -5,8 +5,8 @@
   "sdk": 3,
   "platforms": ["local"],
   "name": {
-    "en": "Proxmox VE",
-    "de": "Proxmox VE"
+    "en": "PVE-Control",
+    "de": "PVE-Control"
   },
   "description": {
     "en": "Monitor and control your Proxmox VE servers, virtual machines and containers.",

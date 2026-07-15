@@ -1,6 +1,9 @@
 {
   "type": "number",
-  "title": { "en": "Disk usage", "de": "Festplattenauslastung" },
+  "title": {
+    "en": "Disk usage",
+    "de": "Festplattenauslastung"
+  },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
@@ -8,5 +11,6 @@
   "decimals": 1,
   "min": 0,
   "max": 100,
-  "insights": true
+  "insights": true,
+  "icon": "/assets/capabilities/disk.svg"
 }

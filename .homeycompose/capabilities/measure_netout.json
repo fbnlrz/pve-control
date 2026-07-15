@@ -1,11 +1,15 @@
 {
   "type": "number",
-  "title": { "en": "Network out", "de": "Netzwerk aus" },
+  "title": {
+    "en": "Network out",
+    "de": "Netzwerk aus"
+  },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "units": "Mbit/s",
   "decimals": 2,
   "min": 0,
-  "insights": true
+  "insights": true,
+  "icon": "/assets/capabilities/arrow-up.svg"
 }

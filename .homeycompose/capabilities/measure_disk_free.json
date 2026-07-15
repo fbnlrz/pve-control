@@ -1,11 +1,15 @@
 {
   "type": "number",
-  "title": { "en": "Disk free", "de": "Freier Speicher" },
+  "title": {
+    "en": "Disk free",
+    "de": "Freier Speicher"
+  },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "units": "GB",
   "decimals": 1,
   "min": 0,
-  "insights": true
+  "insights": true,
+  "icon": "/assets/capabilities/disk.svg"
 }

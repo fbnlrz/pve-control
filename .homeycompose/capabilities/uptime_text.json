@@ -1,8 +1,12 @@
 {
   "type": "string",
-  "title": { "en": "Uptime", "de": "Betriebszeit" },
+  "title": {
+    "en": "Uptime",
+    "de": "Betriebszeit"
+  },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
-  "insights": false
+  "insights": false,
+  "icon": "/assets/capabilities/clock.svg"
 }

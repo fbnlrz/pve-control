@@ -10,6 +10,8 @@
     "measure_disk",
     "measure_netin",
     "measure_netout",
+    "measure_diskread",
+    "measure_diskwrite",
     "uptime_text"
   ],
   "capabilitiesOptions": {

@@ -1,4 +1,4 @@
-# Proxmox VE for Homey (`com.fbnlrz.pvecontrol`)
+# PVE-Control (`com.fbnlrz.pvecontrol`)
 
 A Homey Pro app to monitor and control [Proxmox VE](https://www.proxmox.com/)
 servers, virtual machines and LXC containers over the Proxmox REST API.
@@ -7,8 +7,8 @@ servers, virtual machines and LXC containers over the Proxmox REST API.
 
 | Device | Sensors | Control |
 | --- | --- | --- |
-| **Virtual Machine** (QEMU) | status, CPU, memory (%/GB), disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot, **move disk to storage** |
-| **LXC Container** | status, CPU, memory (%/GB), disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot, **move volume to storage** |
+| **Virtual Machine** (QEMU) | status, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot, **move disk to storage** |
+| **LXC Container** | status, CPU, memory (%/GB), disk, network in/out, disk read/write, uptime | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot, **move volume to storage** |
 | **Node** (host) | status, CPU, memory (%/GB), disk, swap, load average, running VMs, uptime | reboot, shutdown (via Flow) |
 | **Storage** | status, usage (%), used/free (GB) | – |
 | **Cluster** | quorum alarm, aggregate CPU/memory, running VMs/containers | – |

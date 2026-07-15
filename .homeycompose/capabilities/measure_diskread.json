@@ -1,14 +1,15 @@
 {
   "type": "number",
   "title": {
-    "en": "Running containers",
-    "de": "Laufende Container"
+    "en": "Disk read",
+    "de": "Disk lesen"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
-  "decimals": 0,
+  "units": "MB/s",
+  "decimals": 2,
   "min": 0,
   "insights": true,
-  "icon": "/assets/capabilities/container.svg"
+  "icon": "/assets/capabilities/disk-read.svg"
 }

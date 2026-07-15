@@ -1,8 +1,12 @@
 {
   "type": "string",
-  "title": { "en": "Status", "de": "Status" },
+  "title": {
+    "en": "Status",
+    "de": "Status"
+  },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
-  "insights": false
+  "insights": false,
+  "icon": "/assets/capabilities/status.svg"
 }
