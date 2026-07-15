@@ -1,0 +1,15 @@
+{
+  "id": "disk_moved",
+  "title": { "en": "A disk was moved", "de": "Eine Disk wurde verschoben" },
+  "hint": {
+    "en": "Triggers when a VM disk or container volume is moved to another storage (manually or by the balancer).",
+    "de": "Wird ausgelöst, wenn eine VM-Disk oder ein Container-Volume auf einen anderen Storage verschoben wird (manuell oder durch den Balancer)."
+  },
+  "tokens": [
+    { "name": "guest", "type": "string", "title": { "en": "Guest", "de": "Gast" }, "example": "web-vm" },
+    { "name": "vmid", "type": "number", "title": { "en": "VMID", "de": "VMID" }, "example": 100 },
+    { "name": "disk", "type": "string", "title": { "en": "Disk", "de": "Disk" }, "example": "scsi0" },
+    { "name": "from", "type": "string", "title": { "en": "From storage", "de": "Von Storage" }, "example": "local-lvm" },
+    { "name": "to", "type": "string", "title": { "en": "To storage", "de": "Zu Storage" }, "example": "local-zfs" }
+  ]
+}

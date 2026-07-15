@@ -7,14 +7,32 @@ servers, virtual machines and LXC containers over the Proxmox REST API.
 
 | Device | Sensors | Control |
 | --- | --- | --- |
-| **Virtual Machine** (QEMU) | status, CPU, memory, disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot |
-| **LXC Container** | status, CPU, memory, disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot |
-| **Node** (host) | status, CPU, memory, disk, swap, load average, running VMs, uptime | reboot, shutdown (via Flow) |
-| **Storage** | status, usage | – |
+| **Virtual Machine** (QEMU) | status, CPU, memory (%/GB), disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, reset, suspend, resume, create/roll back snapshot, **move disk to storage** |
+| **LXC Container** | status, CPU, memory (%/GB), disk, network in/out, uptime | on/off, start, shutdown, stop, reboot, suspend, resume, create/roll back snapshot, **move volume to storage** |
+| **Node** (host) | status, CPU, memory (%/GB), disk, swap, load average, running VMs, uptime | reboot, shutdown (via Flow) |
+| **Storage** | status, usage (%), used/free (GB) | – |
 | **Cluster** | quorum alarm, aggregate CPU/memory, running VMs/containers | – |
 
 All numeric sensors are logged to Insights and usable in Flows. Custom
 capabilities auto-generate "changed" / "greater than" Flow cards.
+
+## Disk balancing
+
+Spread VM disk images / container volumes across datastores so no single
+storage fills up.
+
+- **Flow building blocks:** the *Move disk/volume to storage* actions (with
+  autocomplete for the disk and target storage) plus the storage usage
+  sensors let you build any rule you like, e.g. *when `local-lvm` usage > 85%,
+  move a disk to `local-zfs`*. An app-level *A disk was moved* trigger fires
+  on every move (manual or automatic).
+- **Automatic balancer (opt-in):** enable it in the app settings. On an
+  interval it moves the largest movable disk off a storage above the
+  high-water mark to the emptiest storage below the low-water mark on the
+  same node. Guardrails: **dry-run is on by default** (logs only), one move
+  per node per run, only moves disks that fit the target (10% margin), and
+  skips running LXC containers (their volumes require a stopped container).
+  QEMU disks move live.
 
 ## Architecture
 

@@ -22,6 +22,17 @@
     "title": "Default connection",
     "subtitle": "These values pre-fill the pairing screen when adding a new device.",
     "save": "Save",
-    "saved": "Saved"
+    "saved": "Saved",
+    "balance": {
+      "title": "Automatic disk balancing",
+      "subtitle": "Move the largest movable disk off a full storage to an emptier one on the same node. Requires at least one paired device per server. Test with dry-run first.",
+      "enabled": "Enable automatic balancing",
+      "dryRun": "Dry-run (only log, do not move)",
+      "high": "Source threshold (%)",
+      "low": "Target below (%)",
+      "interval": "Check interval (min)",
+      "minGb": "Min. disk size (GB)",
+      "bw": "Bandwidth limit (KB/s, 0 = unlimited)"
+    }
   }
 }

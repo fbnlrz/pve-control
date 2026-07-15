@@ -54,6 +54,64 @@
   "flow": {
     "triggers": [
       {
+        "id": "disk_moved",
+        "title": {
+          "en": "A disk was moved",
+          "de": "Eine Disk wurde verschoben"
+        },
+        "hint": {
+          "en": "Triggers when a VM disk or container volume is moved to another storage (manually or by the balancer).",
+          "de": "Wird ausgelöst, wenn eine VM-Disk oder ein Container-Volume auf einen anderen Storage verschoben wird (manuell oder durch den Balancer)."
+        },
+        "tokens": [
+          {
+            "name": "guest",
+            "type": "string",
+            "title": {
+              "en": "Guest",
+              "de": "Gast"
+            },
+            "example": "web-vm"
+          },
+          {
+            "name": "vmid",
+            "type": "number",
+            "title": {
+              "en": "VMID",
+              "de": "VMID"
+            },
+            "example": 100
+          },
+          {
+            "name": "disk",
+            "type": "string",
+            "title": {
+              "en": "Disk",
+              "de": "Disk"
+            },
+            "example": "scsi0"
+          },
+          {
+            "name": "from",
+            "type": "string",
+            "title": {
+              "en": "From storage",
+              "de": "Von Storage"
+            },
+            "example": "local-lvm"
+          },
+          {
+            "name": "to",
+            "type": "string",
+            "title": {
+              "en": "To storage",
+              "de": "Zu Storage"
+            },
+            "example": "local-zfs"
+          }
+        ]
+      },
+      {
         "id": "quorum_lost",
         "title": {
           "en": "Quorum lost",
@@ -419,6 +477,53 @@
         ]
       },
       {
+        "id": "lxc_move_volume",
+        "title": {
+          "en": "Move volume to storage",
+          "de": "Volume auf Storage verschieben"
+        },
+        "titleFormatted": {
+          "en": "Move volume [[volume]] to [[storage]], delete source [[delete_source]]",
+          "de": "Volume [[volume]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
+        },
+        "hint": {
+          "en": "The container must be stopped to move a volume.",
+          "de": "Der Container muss zum Verschieben eines Volumes gestoppt sein."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          },
+          {
+            "name": "volume",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select volume",
+              "de": "Volume wählen"
+            }
+          },
+          {
+            "name": "storage",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "target storage",
+              "de": "Ziel-Storage"
+            }
+          },
+          {
+            "name": "delete_source",
+            "type": "checkbox",
+            "required": false,
+            "title": {
+              "en": "Delete source",
+              "de": "Quelle löschen"
+            }
+          }
+        ]
+      },
+      {
         "id": "node_reboot",
         "title": {
           "en": "Reboot node",
@@ -609,6 +714,49 @@
             "placeholder": {
               "en": "select snapshot",
               "de": "Snapshot wählen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "qemu_move_disk",
+        "title": {
+          "en": "Move disk to storage",
+          "de": "Disk auf Storage verschieben"
+        },
+        "titleFormatted": {
+          "en": "Move disk [[disk]] to [[storage]], delete source [[delete_source]]",
+          "de": "Disk [[disk]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          },
+          {
+            "name": "disk",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select disk",
+              "de": "Disk wählen"
+            }
+          },
+          {
+            "name": "storage",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "target storage",
+              "de": "Ziel-Storage"
+            }
+          },
+          {
+            "name": "delete_source",
+            "type": "checkbox",
+            "required": false,
+            "title": {
+              "en": "Delete source",
+              "de": "Quelle löschen"
             }
           }
         ]

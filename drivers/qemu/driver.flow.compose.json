@@ -55,6 +55,19 @@
       "args": [
         { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
       ]
+    },
+    {
+      "id": "qemu_move_disk",
+      "title": { "en": "Move disk to storage", "de": "Disk auf Storage verschieben" },
+      "titleFormatted": {
+        "en": "Move disk [[disk]] to [[storage]], delete source [[delete_source]]",
+        "de": "Disk [[disk]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
+      },
+      "args": [
+        { "name": "disk", "type": "autocomplete", "placeholder": { "en": "select disk", "de": "Disk wählen" } },
+        { "name": "storage", "type": "autocomplete", "placeholder": { "en": "target storage", "de": "Ziel-Storage" } },
+        { "name": "delete_source", "type": "checkbox", "required": false, "title": { "en": "Delete source", "de": "Quelle löschen" } }
+      ]
     }
   ]
 }

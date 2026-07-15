@@ -22,6 +22,17 @@
     "title": "Standard-Verbindung",
     "subtitle": "Diese Werte füllen die Kopplungsmaske beim Hinzufügen eines neuen Geräts vor.",
     "save": "Speichern",
-    "saved": "Gespeichert"
+    "saved": "Gespeichert",
+    "balance": {
+      "title": "Automatisches Disk-Balancing",
+      "subtitle": "Verschiebt die größte verschiebbare Disk von einem vollen Storage auf einen leereren auf demselben Node. Mindestens ein gekoppeltes Gerät pro Server nötig. Erst mit Dry-Run testen.",
+      "enabled": "Automatisches Balancing aktivieren",
+      "dryRun": "Dry-Run (nur protokollieren, nicht verschieben)",
+      "high": "Quell-Schwellwert (%)",
+      "low": "Ziel unter (%)",
+      "interval": "Prüfintervall (Min.)",
+      "minGb": "Min. Disk-Größe (GB)",
+      "bw": "Bandbreitenlimit (KB/s, 0 = unbegrenzt)"
+    }
   }
 }

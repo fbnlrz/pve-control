@@ -54,6 +54,23 @@
       "args": [
         { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
       ]
+    },
+    {
+      "id": "lxc_move_volume",
+      "title": { "en": "Move volume to storage", "de": "Volume auf Storage verschieben" },
+      "titleFormatted": {
+        "en": "Move volume [[volume]] to [[storage]], delete source [[delete_source]]",
+        "de": "Volume [[volume]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
+      },
+      "hint": {
+        "en": "The container must be stopped to move a volume.",
+        "de": "Der Container muss zum Verschieben eines Volumes gestoppt sein."
+      },
+      "args": [
+        { "name": "volume", "type": "autocomplete", "placeholder": { "en": "select volume", "de": "Volume wählen" } },
+        { "name": "storage", "type": "autocomplete", "placeholder": { "en": "target storage", "de": "Ziel-Storage" } },
+        { "name": "delete_source", "type": "checkbox", "required": false, "title": { "en": "Delete source", "de": "Quelle löschen" } }
+      ]
     }
   ]
 }

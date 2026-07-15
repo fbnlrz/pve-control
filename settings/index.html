@@ -9,6 +9,8 @@
     .row .field { flex: 1; }
     .hint { font-size: 12px; opacity: 0.6; margin-top: 4px; }
     .saved { display: none; color: #2ecc71; font-size: 13px; margin-top: 10px; }
+    hr { border: none; border-top: 1px solid rgba(128,128,128,0.25); margin: 22px 0 16px; }
+    h3 { margin: 0 0 4px; }
   </style>
 </head>
 <body>
@@ -45,23 +47,84 @@
     </label>
   </div>
 
+  <hr />
+
+  <h3 class="homey-title" data-i18n="settings.balance.title">Automatic disk balancing</h3>
+  <p class="homey-subtitle" data-i18n="settings.balance.subtitle">Move the largest movable disk off a full storage to an emptier one on the same node. Requires at least one paired device per server. Test with dry-run first.</p>
+
+  <div class="field">
+    <label class="homey-form-checkbox">
+      <input id="autoBalanceEnabled" type="checkbox" class="homey-form-checkbox-input" />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="settings.balance.enabled">Enable automatic balancing</span>
+    </label>
+  </div>
+
+  <div class="field">
+    <label class="homey-form-checkbox">
+      <input id="balanceDryRun" type="checkbox" class="homey-form-checkbox-input" checked />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="settings.balance.dryRun">Dry-run (only log, do not move)</span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label class="homey-form-label" data-i18n="settings.balance.high">Source threshold (%)</label>
+      <input id="balanceHighPct" class="homey-form-input" type="number" value="85" min="1" max="100" />
+    </div>
+    <div class="field">
+      <label class="homey-form-label" data-i18n="settings.balance.low">Target below (%)</label>
+      <input id="balanceLowPct" class="homey-form-input" type="number" value="70" min="1" max="100" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label class="homey-form-label" data-i18n="settings.balance.interval">Check interval (min)</label>
+      <input id="balanceIntervalMin" class="homey-form-input" type="number" value="30" min="5" />
+    </div>
+    <div class="field">
+      <label class="homey-form-label" data-i18n="settings.balance.minGb">Min. disk size (GB)</label>
+      <input id="balanceMinGb" class="homey-form-input" type="number" value="5" min="0" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="homey-form-label" data-i18n="settings.balance.bw">Bandwidth limit (KB/s, 0 = unlimited)</label>
+    <input id="balanceBwLimit" class="homey-form-input" type="number" value="0" min="0" />
+  </div>
+
+  <hr />
+
   <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
   <div id="saved" class="saved" data-i18n="settings.saved">Saved</div>
 
   <script type="text/javascript">
     function onHomeyReady(Homey) {
-      var fields = ['defaultHost', 'defaultPort', 'defaultTokenId', 'defaultTokenSecret'];
+      var texts = ['defaultHost', 'defaultPort', 'defaultTokenId', 'defaultTokenSecret',
+        'balanceHighPct', 'balanceLowPct', 'balanceIntervalMin', 'balanceMinGb', 'balanceBwLimit'];
+      var checks = ['defaultVerifyTls', 'autoBalanceEnabled', 'balanceDryRun'];
 
-      fields.forEach(function (key) {
+      texts.forEach(function (key) {
         Homey.get(key, function (err, value) {
           if (!err && value !== undefined && value !== null) {
             document.getElementById(key).value = value;
           }
         });
       });
-      Homey.get('defaultVerifyTls', function (err, value) {
-        document.getElementById('defaultVerifyTls').checked = !!value;
+      checks.forEach(function (key) {
+        Homey.get(key, function (err, value) {
+          if (!err && value !== undefined && value !== null) {
+            document.getElementById(key).checked = !!value;
+          }
+        });
       });
+
+      function num(id, def) {
+        var v = parseFloat(document.getElementById(id).value);
+        return Number.isNaN(v) ? def : v;
+      }
 
       document.getElementById('save').addEventListener('click', function () {
         Homey.set('defaultHost', document.getElementById('defaultHost').value.trim());
@@ -69,6 +132,15 @@
         Homey.set('defaultTokenId', document.getElementById('defaultTokenId').value.trim());
         Homey.set('defaultTokenSecret', document.getElementById('defaultTokenSecret').value.trim());
         Homey.set('defaultVerifyTls', document.getElementById('defaultVerifyTls').checked);
+
+        Homey.set('autoBalanceEnabled', document.getElementById('autoBalanceEnabled').checked);
+        Homey.set('balanceDryRun', document.getElementById('balanceDryRun').checked);
+        Homey.set('balanceHighPct', num('balanceHighPct', 85));
+        Homey.set('balanceLowPct', num('balanceLowPct', 70));
+        Homey.set('balanceIntervalMin', num('balanceIntervalMin', 30));
+        Homey.set('balanceMinGb', num('balanceMinGb', 5));
+        Homey.set('balanceBwLimit', num('balanceBwLimit', 0));
+
         var saved = document.getElementById('saved');
         saved.style.display = 'block';
         setTimeout(function () { saved.style.display = 'none'; }, 2000);
