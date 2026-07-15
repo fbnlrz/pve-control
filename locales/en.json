@@ -43,6 +43,20 @@
     "nodes": "nodes",
     "vms": "Running VMs",
     "cts": "Running containers",
-    "mem": "Memory"
+    "mem": "Memory",
+    "disk": "Disk",
+    "load": "load",
+    "network": "network",
+    "noStorage": "No storage found",
+    "pickNode": "Pick a node in the widget settings",
+    "start": "Start",
+    "shutdown": "Shut down",
+    "pickGuest": "Pick a VM/container in the widget settings",
+    "guests": "guests",
+    "withBackup": "with backup",
+    "noBackup": "no backup",
+    "oldest": "Oldest backup",
+    "never": "never",
+    "noGuests": "No guests found"
   }
 }

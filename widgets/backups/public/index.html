@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--homey-text-color);
+      font-family: var(--homey-font-family, -apple-system, "Segoe UI", Roboto, sans-serif);
+      padding: var(--homey-su-3, 12px);
+      box-sizing: border-box;
+    }
+    .tiles { display: flex; gap: 14px; margin-bottom: 12px; }
+    .tile b { display: block; font-size: 20px; font-weight: 700; }
+    .tile span { font-size: 11px; color: var(--homey-text-color-light); }
+    .tile b.warn { color: var(--homey-color-red, #e74c3c); }
+    .oldest { font-size: 12px; color: var(--homey-text-color-light); margin-bottom: 10px; }
+    .item { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-top: 1px solid var(--homey-color-mono-200, rgba(128,128,128,.18)); }
+    .item .none { color: var(--homey-color-red, #e74c3c); }
+    #empty { font-size: 13px; color: var(--homey-text-color-light); }
+  </style>
+</head>
+<body>
+  <div id="content" style="display:none;">
+    <div class="tiles">
+      <div class="tile"><b id="total">–</b><span data-t="guests">guests</span></div>
+      <div class="tile"><b id="with">–</b><span data-t="withb">with backup</span></div>
+      <div class="tile"><b id="without" class="warn">–</b><span data-t="withoutb">no backup</span></div>
+    </div>
+    <div class="oldest"><span data-t="oldest">Oldest backup</span>: <span id="oldest">–</span></div>
+    <div id="list"></div>
+  </div>
+  <div id="empty" style="display:none;"></div>
+
+  <script>
+    function onHomeyReady(Homey) {
+      var settings = Homey.getSettings() || {};
+      var refresh = Math.max(30, parseInt(settings.refresh, 10) || 300);
+
+      var t = {
+        guests: Homey.__('widget.guests') || 'guests',
+        withb: Homey.__('widget.withBackup') || 'with backup',
+        withoutb: Homey.__('widget.noBackup') || 'no backup',
+        oldest: Homey.__('widget.oldest') || 'Oldest backup'
+      };
+      document.querySelectorAll('[data-t]').forEach(function (el) { var k = el.getAttribute('data-t'); if (t[k]) el.textContent = t[k]; });
+
+      function esc(s) { return String(s).replace(/[<>&]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; }); }
+
+      function render(o) {
+        var content = document.getElementById('content');
+        var empty = document.getElementById('empty');
+        if (!o || !o.total) {
+          content.style.display = 'none';
+          empty.style.display = 'block';
+          empty.textContent = Homey.__('widget.noGuests') || 'No guests found';
+          Homey.ready();
+          return;
+        }
+        content.style.display = 'block';
+        empty.style.display = 'none';
+        document.getElementById('total').textContent = o.total;
+        document.getElementById('with').textContent = o.withBackup;
+        document.getElementById('without').textContent = o.without;
+        document.getElementById('oldest').textContent = o.oldest;
+        document.getElementById('list').innerHTML = (o.stale || []).map(function (s) {
+          var when = s.when === '—'
+            ? '<span class="none">' + (Homey.__('widget.never') || 'never') + '</span>'
+            : esc(s.when);
+          return '<div class="item"><span>' + esc(s.name) + '</span><span>' + when + '</span></div>';
+        }).join('');
+        Homey.ready({ height: Math.min(600, 130 + (o.stale ? o.stale.length : 0) * 22) });
+      }
+
+      function update() {
+        Homey.api('GET', '/').then(render).catch(function () { Homey.ready(); });
+      }
+
+      update();
+      setInterval(update, refresh * 1000);
+    }
+  </script>
+</body>
+</html>

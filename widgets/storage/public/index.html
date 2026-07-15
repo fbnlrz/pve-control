@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--homey-text-color);
+      font-family: var(--homey-font-family, -apple-system, "Segoe UI", Roboto, sans-serif);
+      padding: var(--homey-su-3, 12px);
+      box-sizing: border-box;
+    }
+    .row { margin-bottom: 10px; }
+    .row:last-child { margin-bottom: 0; }
+    .line { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+    .name { font-weight: 600; }
+    .tag { font-size: 10px; padding: 1px 5px; border-radius: 6px; margin-left: 6px; background: var(--homey-color-mono-200, rgba(128,128,128,.25)); color: var(--homey-text-color-light); }
+    .sub { font-size: 11px; color: var(--homey-text-color-light); }
+    .bar { height: 6px; border-radius: 3px; background: var(--homey-color-mono-200, rgba(128,128,128,.22)); margin-top: 4px; overflow: hidden; }
+    .bar > span { display: block; height: 100%; background: var(--homey-color-blue, #3b82f6); }
+    .bar > span.warn { background: var(--homey-color-orange, #E57000); }
+    .bar > span.crit { background: var(--homey-color-red, #e74c3c); }
+    #empty { font-size: 13px; color: var(--homey-text-color-light); }
+  </style>
+</head>
+<body>
+  <div id="list"></div>
+  <div id="empty" style="display:none;"></div>
+
+  <script>
+    function onHomeyReady(Homey) {
+      var settings = Homey.getSettings() || {};
+      var refresh = Math.max(5, parseInt(settings.refresh, 10) || 30);
+      var netLabel = Homey.__('widget.network') || 'network';
+
+      function esc(s) { return String(s).replace(/[<>&]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; }); }
+
+      function render(items) {
+        var list = document.getElementById('list');
+        var empty = document.getElementById('empty');
+        if (!items || !items.length) {
+          list.innerHTML = '';
+          empty.style.display = 'block';
+          empty.textContent = Homey.__('widget.noStorage') || 'No storage found';
+          Homey.ready();
+          return;
+        }
+        empty.style.display = 'none';
+        list.innerHTML = items.map(function (s) {
+          var cls = s.pct >= 90 ? 'crit' : (s.pct >= 75 ? 'warn' : '');
+          var tag = s.network ? '<span class="tag">' + esc(s.type || netLabel) + '</span>' : '';
+          return '<div class="row">'
+            + '<div class="line"><span class="name">' + esc(s.name) + tag + '</span><span>' + s.pct + '%</span></div>'
+            + '<div class="bar"><span class="' + cls + '" style="width:' + Math.min(100, s.pct) + '%"></span></div>'
+            + '<div class="sub">' + s.usedGb + ' / ' + s.totalGb + ' GB</div>'
+            + '</div>';
+        }).join('');
+        Homey.ready({ height: Math.min(600, 20 + items.length * 52) });
+      }
+
+      function update() {
+        Homey.api('GET', '/').then(render).catch(function () { Homey.ready(); });
+      }
+
+      update();
+      setInterval(update, refresh * 1000);
+    }
+  </script>
+</body>
+</html>

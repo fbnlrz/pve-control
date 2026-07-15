@@ -1,0 +1,18 @@
+{
+  "name": { "en": "Backup status", "de": "Backup-Status" },
+  "height": 220,
+  "transparent": false,
+  "settings": [
+    {
+      "id": "refresh",
+      "type": "number",
+      "title": { "en": "Refresh interval (seconds)", "de": "Aktualisierungsintervall (Sekunden)" },
+      "value": 300,
+      "min": 30,
+      "max": 3600
+    }
+  ],
+  "api": {
+    "getBackups": { "method": "GET", "path": "/" }
+  }
+}

@@ -3,6 +3,9 @@
 const Homey = require('homey');
 const ConnectionManager = require('./lib/ConnectionManager');
 const DiskBalancer = require('./lib/DiskBalancer');
+const { formatTimestamp } = require('./lib/util');
+
+const NETWORK_STORAGE_TYPES = new Set(['nfs', 'cifs', 'glusterfs', 'cephfs', 'pbs']);
 
 /**
  * Proxmox VE control app.
@@ -21,8 +24,134 @@ class PveControlApp extends Homey.App {
 
     this._registerBalancerAction();
     this._registerGuestActions();
+    this._registerWidgets();
 
     this.log('PVE-Control app has been initialized');
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /* Widget data providers (read from cached /cluster/resources snapshots)    */
+  /* ----------------------------------------------------------------------- */
+
+  getStorages() {
+    const rows = [];
+    for (const connection of this.connections.connections.values()) {
+      for (const r of connection.lastResources || []) {
+        if (r.type !== 'storage') continue;
+        const used = r.disk || 0;
+        const total = r.maxdisk || 0;
+        rows.push({
+          name: r.storage || r.id,
+          node: r.node,
+          type: r.plugintype || '',
+          usedGb: Math.round((used / (1024 ** 3)) * 10) / 10,
+          totalGb: Math.round((total / (1024 ** 3)) * 10) / 10,
+          pct: total ? Math.round((used / total) * 100) : 0,
+          network: NETWORK_STORAGE_TYPES.has(r.plugintype),
+          status: r.status,
+        });
+      }
+    }
+    return rows.sort((a, b) => b.pct - a.pct);
+  }
+
+  async getNodeSummary(connKey, node) {
+    const connection = this.connections.connections.get(connKey);
+    if (!connection) return null;
+    const r = (connection.lastResources || []).find((x) => x.type === 'node' && x.node === node);
+    const summary = {
+      node,
+      online: r ? r.status === 'online' : false,
+      cpu: r && r.maxcpu !== undefined ? Math.round((r.cpu || 0) * 100) : 0,
+      mem: r && r.maxmem ? Math.round((r.mem / r.maxmem) * 100) : 0,
+      disk: r && r.maxdisk ? Math.round((r.disk / r.maxdisk) * 100) : 0,
+      load: null,
+      swap: null,
+      vms: (connection.lastResources || []).filter((x) => x.type === 'qemu' && x.node === node && x.status === 'running').length,
+      cts: (connection.lastResources || []).filter((x) => x.type === 'lxc' && x.node === node && x.status === 'running').length,
+    };
+    try {
+      const status = await connection.client.getNodeStatus(node);
+      if (status && Array.isArray(status.loadavg)) summary.load = parseFloat(status.loadavg[0]);
+      if (status && status.swap && status.swap.total) summary.swap = Math.round((status.swap.used / status.swap.total) * 100);
+    } catch (err) {
+      // leave load/swap null
+    }
+    return summary;
+  }
+
+  getGuestSummary(connKey, vmid) {
+    const connection = this.connections.connections.get(connKey);
+    if (!connection) return null;
+    const r = (connection.lastResources || []).find((x) => (x.type === 'qemu' || x.type === 'lxc')
+      && String(x.vmid) === String(vmid));
+    if (!r) return null;
+    return {
+      name: r.name || `${r.type} ${vmid}`,
+      kind: r.type,
+      node: r.node,
+      status: r.status,
+      running: r.status === 'running',
+      cpu: Math.round((r.cpu || 0) * 100),
+      mem: r.maxmem ? Math.round((r.mem / r.maxmem) * 100) : 0,
+    };
+  }
+
+  async widgetGuestAction(connKey, kind, node, vmid, action) {
+    const client = this.clientFor(connKey);
+    if (!client) throw new Error('Proxmox connection not available');
+    await client.guestAction(kind, node, vmid, action);
+    return { ok: true };
+  }
+
+  getBackupSummary() {
+    let total = 0;
+    let withBackup = 0;
+    let oldest = null;
+    const stale = [];
+    for (const connection of this.connections.connections.values()) {
+      const names = new Map();
+      for (const r of connection.lastResources || []) {
+        if ((r.type === 'qemu' || r.type === 'lxc') && !r.template) names.set(r.vmid, r.name || `${r.type} ${r.vmid}`);
+      }
+      for (const [vmid, name] of names) {
+        total += 1;
+        const backup = connection._backups && connection._backups.get(vmid);
+        if (backup && backup.ctime) {
+          withBackup += 1;
+          if (oldest === null || backup.ctime < oldest) oldest = backup.ctime;
+          stale.push({ name, ctime: backup.ctime });
+        } else {
+          stale.push({ name, ctime: 0 });
+        }
+      }
+    }
+    stale.sort((a, b) => a.ctime - b.ctime);
+    return {
+      total,
+      withBackup,
+      without: total - withBackup,
+      oldest: oldest ? formatTimestamp(oldest) : '—',
+      stale: stale.slice(0, 8).map((s) => ({ name: s.name, when: s.ctime ? formatTimestamp(s.ctime) : '—' })),
+    };
+  }
+
+  _registerWidgets() {
+    const register = (widgetId, argName, listFn) => {
+      try {
+        this.homey.dashboards.getWidget(widgetId).registerSettingAutocompleteListener(argName, async (query) => {
+          const list = await listFn();
+          const q = (query || '').toLowerCase();
+          return list
+            .filter((x) => !q || x.name.toLowerCase().includes(q))
+            .map((x) => ({ ...x, id: x.vmid != null ? `${x.connKey}:${x.vmid}` : `${x.connKey}:${x.node}` }));
+        });
+      } catch (err) {
+        this.error(`widget ${widgetId} autocomplete`, err.message);
+      }
+    };
+    register('node', 'node', () => this._listNodes());
+    register('guest', 'guest', () => this._listGuests());
   }
 
   /**

@@ -1,0 +1,18 @@
+{
+  "name": { "en": "Storage usage", "de": "Storage-Auslastung" },
+  "height": 220,
+  "transparent": false,
+  "settings": [
+    {
+      "id": "refresh",
+      "type": "number",
+      "title": { "en": "Refresh interval (seconds)", "de": "Aktualisierungsintervall (Sekunden)" },
+      "value": 30,
+      "min": 5,
+      "max": 3600
+    }
+  ],
+  "api": {
+    "getStorages": { "method": "GET", "path": "/" }
+  }
+}

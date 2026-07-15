@@ -43,6 +43,20 @@
     "nodes": "Nodes",
     "vms": "Laufende VMs",
     "cts": "Laufende Container",
-    "mem": "Speicher"
+    "mem": "Speicher",
+    "disk": "Disk",
+    "load": "Last",
+    "network": "Netzwerk",
+    "noStorage": "Kein Storage gefunden",
+    "pickNode": "Node in den Widget-Einstellungen wählen",
+    "start": "Starten",
+    "shutdown": "Herunterfahren",
+    "pickGuest": "VM/Container in den Widget-Einstellungen wählen",
+    "guests": "Gäste",
+    "withBackup": "mit Backup",
+    "noBackup": "ohne Backup",
+    "oldest": "Ältestes Backup",
+    "never": "nie",
+    "noGuests": "Keine Gäste gefunden"
   }
 }

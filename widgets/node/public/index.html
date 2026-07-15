@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--homey-text-color);
+      font-family: var(--homey-font-family, -apple-system, "Segoe UI", Roboto, sans-serif);
+      padding: var(--homey-su-3, 12px);
+      box-sizing: border-box;
+    }
+    .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .head .name { font-size: 15px; font-weight: 700; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 6px; background: var(--homey-color-green, #2ecc71); }
+    .dot.off { background: var(--homey-color-red, #e74c3c); }
+    .metric { margin-bottom: 8px; }
+    .metric .lbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--homey-text-color-light); }
+    .bar { height: 6px; border-radius: 3px; background: var(--homey-color-mono-200, rgba(128,128,128,.22)); margin-top: 3px; overflow: hidden; }
+    .bar > span { display: block; height: 100%; background: var(--homey-color-blue, #3b82f6); }
+    .foot { display: flex; gap: 16px; margin-top: 10px; font-size: 12px; color: var(--homey-text-color-light); }
+    .foot b { color: var(--homey-text-color); font-size: 14px; }
+    #hint { font-size: 13px; color: var(--homey-text-color-light); }
+  </style>
+</head>
+<body>
+  <div id="hint" style="display:none;"></div>
+  <div id="content" style="display:none;">
+    <div class="head"><span class="name" id="nname">–</span><span id="dot" class="dot"></span></div>
+    <div class="metric"><div class="lbl"><span data-t="cpu">CPU</span><span id="cpuv">–</span></div><div class="bar"><span id="cpub"></span></div></div>
+    <div class="metric"><div class="lbl"><span data-t="mem">Memory</span><span id="memv">–</span></div><div class="bar"><span id="memb"></span></div></div>
+    <div class="metric"><div class="lbl"><span data-t="disk">Disk</span><span id="diskv">–</span></div><div class="bar"><span id="diskb"></span></div></div>
+    <div class="foot">
+      <span><b id="loadv">–</b> <span data-t="load">load</span></span>
+      <span><b id="vmsv">–</b> VMs</span>
+      <span><b id="ctsv">–</b> CT</span>
+      <span id="swapwrap"><b id="swapv">–</b> swap</span>
+    </div>
+  </div>
+
+  <script>
+    function onHomeyReady(Homey) {
+      var settings = Homey.getSettings() || {};
+      var refresh = Math.max(5, parseInt(settings.refresh, 10) || 30);
+      var sel = settings.node;
+
+      var t = { cpu: 'CPU', mem: Homey.__('widget.mem') || 'Memory', disk: Homey.__('widget.disk') || 'Disk', load: Homey.__('widget.load') || 'load' };
+      document.querySelectorAll('[data-t]').forEach(function (el) { var k = el.getAttribute('data-t'); if (t[k]) el.textContent = t[k]; });
+
+      if (!sel || !sel.connKey || !sel.node) {
+        var h = document.getElementById('hint');
+        h.style.display = 'block';
+        h.textContent = Homey.__('widget.pickNode') || 'Pick a node in the widget settings';
+        Homey.ready();
+        return;
+      }
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('nname').textContent = sel.node;
+
+      function bar(id, v) { document.getElementById(id).style.width = Math.min(100, v || 0) + '%'; }
+
+      function render(o) {
+        if (!o) return;
+        document.getElementById('dot').className = 'dot' + (o.online ? '' : ' off');
+        document.getElementById('cpuv').textContent = o.cpu + '%';
+        document.getElementById('memv').textContent = o.mem + '%';
+        document.getElementById('diskv').textContent = o.disk + '%';
+        bar('cpub', o.cpu); bar('memb', o.mem); bar('diskb', o.disk);
+        document.getElementById('loadv').textContent = (o.load != null ? o.load.toFixed(2) : '–');
+        document.getElementById('vmsv').textContent = o.vms;
+        document.getElementById('ctsv').textContent = o.cts;
+        if (o.swap != null) { document.getElementById('swapv').textContent = o.swap + '%'; }
+        else { document.getElementById('swapwrap').style.display = 'none'; }
+        Homey.ready();
+      }
+
+      function update() {
+        Homey.api('GET', '/?connKey=' + encodeURIComponent(sel.connKey) + '&node=' + encodeURIComponent(sel.node))
+          .then(render).catch(function () { Homey.ready(); });
+      }
+
+      update();
+      setInterval(update, refresh * 1000);
+    }
+  </script>
+</body>
+</html>

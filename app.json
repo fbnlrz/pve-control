@@ -1836,6 +1836,114 @@
     }
   ],
   "widgets": {
+    "backups": {
+      "name": {
+        "en": "Backup status",
+        "de": "Backup-Status"
+      },
+      "height": 220,
+      "transparent": false,
+      "settings": [
+        {
+          "id": "refresh",
+          "type": "number",
+          "title": {
+            "en": "Refresh interval (seconds)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "value": 300,
+          "min": 30,
+          "max": 3600
+        }
+      ],
+      "api": {
+        "getBackups": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "backups"
+    },
+    "guest": {
+      "name": {
+        "en": "VM / container control",
+        "de": "VM / Container-Steuerung"
+      },
+      "height": 168,
+      "transparent": false,
+      "settings": [
+        {
+          "id": "guest",
+          "type": "autocomplete",
+          "title": {
+            "en": "VM / container",
+            "de": "VM / Container"
+          }
+        },
+        {
+          "id": "refresh",
+          "type": "number",
+          "title": {
+            "en": "Refresh interval (seconds)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 3600
+        }
+      ],
+      "api": {
+        "getGuest": {
+          "method": "GET",
+          "path": "/"
+        },
+        "start": {
+          "method": "POST",
+          "path": "/start"
+        },
+        "shutdown": {
+          "method": "POST",
+          "path": "/shutdown"
+        }
+      },
+      "id": "guest"
+    },
+    "node": {
+      "name": {
+        "en": "Node",
+        "de": "Node"
+      },
+      "height": 196,
+      "transparent": false,
+      "settings": [
+        {
+          "id": "node",
+          "type": "autocomplete",
+          "title": {
+            "en": "Node",
+            "de": "Node"
+          }
+        },
+        {
+          "id": "refresh",
+          "type": "number",
+          "title": {
+            "en": "Refresh interval (seconds)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 3600
+        }
+      ],
+      "api": {
+        "getNode": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "node"
+    },
     "overview": {
       "name": {
         "en": "Cluster overview",
@@ -1863,6 +1971,34 @@
         }
       },
       "id": "overview"
+    },
+    "storage": {
+      "name": {
+        "en": "Storage usage",
+        "de": "Storage-Auslastung"
+      },
+      "height": 220,
+      "transparent": false,
+      "settings": [
+        {
+          "id": "refresh",
+          "type": "number",
+          "title": {
+            "en": "Refresh interval (seconds)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 3600
+        }
+      ],
+      "api": {
+        "getStorages": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "storage"
     }
   },
   "capabilities": {

@@ -1,0 +1,25 @@
+{
+  "name": { "en": "VM / container control", "de": "VM / Container-Steuerung" },
+  "height": 168,
+  "transparent": false,
+  "settings": [
+    {
+      "id": "guest",
+      "type": "autocomplete",
+      "title": { "en": "VM / container", "de": "VM / Container" }
+    },
+    {
+      "id": "refresh",
+      "type": "number",
+      "title": { "en": "Refresh interval (seconds)", "de": "Aktualisierungsintervall (Sekunden)" },
+      "value": 30,
+      "min": 5,
+      "max": 3600
+    }
+  ],
+  "api": {
+    "getGuest": { "method": "GET", "path": "/" },
+    "start": { "method": "POST", "path": "/start" },
+    "shutdown": { "method": "POST", "path": "/shutdown" }
+  }
+}

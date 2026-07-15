@@ -14,6 +14,10 @@ servers, virtual machines and LXC containers over the Proxmox REST API.
 (no pairing), start all / shut down all guests on a node, and run the disk
 balancer on demand. **Backup triggers:** *a backup completed* / *a backup
 failed*.
+
+**Dashboard widgets:** cluster overview, storage usage (network shares
+tagged), node detail, interactive VM/container control (start/shutdown
+buttons), and backup status.
 | **Node** (host) | status, CPU, memory (%/GB), disk, swap, load average, running VMs, uptime | reboot, shutdown (via Flow) |
 | **Storage** | status, usage (%), used/free (GB) | – |
 | **Cluster** | quorum alarm, aggregate CPU/memory, running VMs/containers | – |

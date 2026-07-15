@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--homey-text-color);
+      font-family: var(--homey-font-family, -apple-system, "Segoe UI", Roboto, sans-serif);
+      padding: var(--homey-su-3, 12px);
+      box-sizing: border-box;
+    }
+    .head { display: flex; align-items: center; justify-content: space-between; }
+    .name { font-size: 15px; font-weight: 700; }
+    .status { font-size: 12px; padding: 2px 8px; border-radius: 8px; background: var(--homey-color-mono-200, rgba(128,128,128,.22)); }
+    .status.run { background: rgba(46,204,113,.2); color: var(--homey-color-green, #2ecc71); }
+    .metrics { display: flex; gap: 18px; margin: 12px 0; font-size: 12px; color: var(--homey-text-color-light); }
+    .metrics b { color: var(--homey-text-color); font-size: 15px; display: block; }
+    .btns { display: flex; gap: 10px; }
+    button {
+      flex: 1; padding: 11px; font-size: 14px; font-weight: 600; border: none; border-radius: 9px; cursor: pointer;
+      color: #fff;
+    }
+    button.start { background: var(--homey-color-green, #2ecc71); }
+    button.stop { background: var(--homey-color-orange, #E57000); }
+    button:disabled { opacity: 0.5; cursor: default; }
+    #hint { font-size: 13px; color: var(--homey-text-color-light); }
+  </style>
+</head>
+<body>
+  <div id="hint" style="display:none;"></div>
+  <div id="content" style="display:none;">
+    <div class="head"><span class="name" id="gname">–</span><span class="status" id="gstatus">–</span></div>
+    <div class="metrics">
+      <span><b id="gcpu">–</b><span data-t="cpu">CPU</span></span>
+      <span><b id="gmem">–</b><span data-t="mem">Memory</span></span>
+    </div>
+    <div class="btns">
+      <button class="start" id="btn-start" data-t="start">Start</button>
+      <button class="stop" id="btn-stop" data-t="stop">Shut down</button>
+    </div>
+  </div>
+
+  <script>
+    function onHomeyReady(Homey) {
+      var settings = Homey.getSettings() || {};
+      var refresh = Math.max(5, parseInt(settings.refresh, 10) || 30);
+      var sel = settings.guest;
+
+      var t = {
+        cpu: 'CPU', mem: Homey.__('widget.mem') || 'Memory',
+        start: Homey.__('widget.start') || 'Start', stop: Homey.__('widget.shutdown') || 'Shut down'
+      };
+      document.querySelectorAll('[data-t]').forEach(function (el) { var k = el.getAttribute('data-t'); if (t[k]) el.textContent = t[k]; });
+
+      if (!sel || !sel.connKey || sel.vmid == null) {
+        var h = document.getElementById('hint');
+        h.style.display = 'block';
+        h.textContent = Homey.__('widget.pickGuest') || 'Pick a VM/container in the widget settings';
+        Homey.ready();
+        return;
+      }
+      document.getElementById('content').style.display = 'block';
+
+      function render(o) {
+        if (!o) { Homey.ready(); return; }
+        document.getElementById('gname').textContent = o.name;
+        var st = document.getElementById('gstatus');
+        st.textContent = o.status;
+        st.className = 'status' + (o.running ? ' run' : '');
+        document.getElementById('gcpu').textContent = o.cpu + '%';
+        document.getElementById('gmem').textContent = o.mem + '%';
+        document.getElementById('btn-start').disabled = o.running;
+        document.getElementById('btn-stop').disabled = !o.running;
+        Homey.ready();
+      }
+
+      function update() {
+        Homey.api('GET', '/?connKey=' + encodeURIComponent(sel.connKey) + '&vmid=' + encodeURIComponent(sel.vmid))
+          .then(render).catch(function () { Homey.ready(); });
+      }
+
+      function act(path) {
+        if (Homey.hapticFeedback) Homey.hapticFeedback();
+        document.getElementById('btn-start').disabled = true;
+        document.getElementById('btn-stop').disabled = true;
+        Homey.api('POST', path, { connKey: sel.connKey, kind: sel.kind, node: sel.node, vmid: sel.vmid })
+          .then(function () { setTimeout(update, 2500); })
+          .catch(function () { setTimeout(update, 1500); });
+      }
+
+      document.getElementById('btn-start').addEventListener('click', function () { act('/start'); });
+      document.getElementById('btn-stop').addEventListener('click', function () { act('/shutdown'); });
+
+      update();
+      setInterval(update, refresh * 1000);
+    }
+  </script>
+</body>
+</html>
