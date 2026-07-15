@@ -4,6 +4,7 @@
   "capabilities": [
     "onoff",
     "pve_status",
+    "ip_address",
     "measure_cpu",
     "measure_memory",
     "measure_ram_used",

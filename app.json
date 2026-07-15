@@ -1052,6 +1052,7 @@
       "capabilities": [
         "onoff",
         "pve_status",
+        "ip_address",
         "measure_cpu",
         "measure_memory",
         "measure_ram_used",
@@ -1355,6 +1356,7 @@
       "capabilities": [
         "onoff",
         "pve_status",
+        "ip_address",
         "measure_cpu",
         "measure_memory",
         "measure_ram_used",
@@ -1657,6 +1659,18 @@
       "setable": false,
       "insights": true,
       "icon": "/assets/capabilities/warning.svg"
+    },
+    "ip_address": {
+      "type": "string",
+      "title": {
+        "en": "IP address",
+        "de": "IP-Adresse"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "icon": "/assets/capabilities/globe.svg"
     },
     "measure_cpu": {
       "type": "number",
