@@ -1,4 +1,4 @@
-# PVE-Control (`com.fbnlrz.pvecontrol`)
+# PROX-Control (`com.fbnlrz.pvecontrol`)
 
 A Homey Pro app to monitor and control [Proxmox VE](https://www.proxmox.com/)
 servers, virtual machines and LXC containers over the Proxmox REST API.
