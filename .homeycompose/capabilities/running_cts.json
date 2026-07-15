@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Running containers", "de": "Laufende Container" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "decimals": 0,
+  "min": 0,
+  "insights": true
+}

@@ -1,0 +1,27 @@
+{
+  "error": {
+    "unreachable": "Proxmox server unreachable",
+    "auth": "Authentication failed – check the API token",
+    "permission": "Permission denied – check the token privileges",
+    "not_found": "Resource not found on the Proxmox server"
+  },
+  "pair": {
+    "host": "Host / IP address",
+    "port": "Port",
+    "tokenId": "API token ID",
+    "tokenIdHint": "Format: user@realm!tokenname",
+    "tokenSecret": "API token secret",
+    "verifyTls": "Verify TLS certificate",
+    "verifyTlsHint": "Leave off for the default self-signed Proxmox certificate.",
+    "connect": "Connect",
+    "connected": "Connected to Proxmox VE",
+    "missingFields": "Please fill in host, token ID and token secret.",
+    "not_connected": "Not connected to Proxmox"
+  },
+  "settings": {
+    "title": "Default connection",
+    "subtitle": "These values pre-fill the pairing screen when adding a new device.",
+    "save": "Save",
+    "saved": "Saved"
+  }
+}

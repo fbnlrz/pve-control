@@ -1,0 +1,37 @@
+{
+  "name": { "en": "Virtual Machine", "de": "Virtuelle Maschine" },
+  "class": "other",
+  "capabilities": [
+    "onoff",
+    "pve_status",
+    "measure_cpu",
+    "measure_memory",
+    "measure_disk",
+    "measure_netin",
+    "measure_netout",
+    "uptime_text"
+  ],
+  "capabilitiesOptions": {
+    "onoff": {
+      "title": { "en": "Power", "de": "Ein/Aus" },
+      "setOnDim": false
+    }
+  },
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "icon": "/drivers/qemu/assets/icon.svg",
+  "images": {
+    "small": "/drivers/qemu/assets/images/small.png",
+    "large": "/drivers/qemu/assets/images/large.png",
+    "xlarge": "/drivers/qemu/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "connect" },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

@@ -1,0 +1,6 @@
+.git/
+.github/
+node_modules/.cache/
+test/
+*.md
+scratchpad/

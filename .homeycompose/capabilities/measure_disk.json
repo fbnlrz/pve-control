@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": { "en": "Disk usage", "de": "Festplattenauslastung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": "%",
+  "decimals": 1,
+  "min": 0,
+  "max": 100,
+  "insights": true
+}

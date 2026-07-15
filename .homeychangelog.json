@@ -1,0 +1,6 @@
+{
+  "1.0.0": {
+    "en": "First release. Monitor and control Proxmox VE virtual machines, LXC containers, nodes, storage and the cluster from Homey, with live sensors and Flow cards.",
+    "de": "Erste Version. Proxmox-VE-VMs, LXC-Container, Nodes, Storage und Cluster in Homey überwachen und steuern – mit Live-Sensoren und Flow-Karten."
+  }
+}

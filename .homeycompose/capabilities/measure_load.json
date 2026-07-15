@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Load average (1m)", "de": "Lastdurchschnitt (1m)" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "decimals": 2,
+  "min": 0,
+  "insights": true
+}

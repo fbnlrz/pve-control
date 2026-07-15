@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <style>
+    body { padding: 8px 4px; }
+    .field { margin-bottom: 14px; }
+    .row { display: flex; gap: 10px; }
+    .row .field { flex: 1; }
+    .hint { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+    .saved { display: none; color: #2ecc71; font-size: 13px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2 class="homey-title" data-i18n="settings.title">Default connection</h2>
+  <p class="homey-subtitle" data-i18n="settings.subtitle">These values pre-fill the pairing screen when adding a new device.</p>
+
+  <div class="row">
+    <div class="field" style="flex: 3;">
+      <label class="homey-form-label" data-i18n="pair.host">Host / IP address</label>
+      <input id="defaultHost" class="homey-form-input" type="text" placeholder="192.168.1.10" />
+    </div>
+    <div class="field" style="flex: 1;">
+      <label class="homey-form-label" data-i18n="pair.port">Port</label>
+      <input id="defaultPort" class="homey-form-input" type="number" value="8006" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="homey-form-label" data-i18n="pair.tokenId">API token ID</label>
+    <input id="defaultTokenId" class="homey-form-input" type="text" placeholder="root@pam!homey" />
+    <div class="hint" data-i18n="pair.tokenIdHint">Format: user@realm!tokenname</div>
+  </div>
+
+  <div class="field">
+    <label class="homey-form-label" data-i18n="pair.tokenSecret">API token secret</label>
+    <input id="defaultTokenSecret" class="homey-form-input" type="password" />
+  </div>
+
+  <div class="field">
+    <label class="homey-form-checkbox">
+      <input id="defaultVerifyTls" type="checkbox" class="homey-form-checkbox-input" />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="pair.verifyTls">Verify TLS certificate</span>
+    </label>
+  </div>
+
+  <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
+  <div id="saved" class="saved" data-i18n="settings.saved">Saved</div>
+
+  <script type="text/javascript">
+    function onHomeyReady(Homey) {
+      var fields = ['defaultHost', 'defaultPort', 'defaultTokenId', 'defaultTokenSecret'];
+
+      fields.forEach(function (key) {
+        Homey.get(key, function (err, value) {
+          if (!err && value !== undefined && value !== null) {
+            document.getElementById(key).value = value;
+          }
+        });
+      });
+      Homey.get('defaultVerifyTls', function (err, value) {
+        document.getElementById('defaultVerifyTls').checked = !!value;
+      });
+
+      document.getElementById('save').addEventListener('click', function () {
+        Homey.set('defaultHost', document.getElementById('defaultHost').value.trim());
+        Homey.set('defaultPort', parseInt(document.getElementById('defaultPort').value, 10) || 8006);
+        Homey.set('defaultTokenId', document.getElementById('defaultTokenId').value.trim());
+        Homey.set('defaultTokenSecret', document.getElementById('defaultTokenSecret').value.trim());
+        Homey.set('defaultVerifyTls', document.getElementById('defaultVerifyTls').checked);
+        var saved = document.getElementById('saved');
+        saved.style.display = 'block';
+        setTimeout(function () { saved.style.display = 'none'; }, 2000);
+      });
+
+      Homey.ready();
+    }
+  </script>
+</body>
+</html>

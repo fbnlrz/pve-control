@@ -1,0 +1,59 @@
+{
+  "triggers": [
+    {
+      "id": "lxc_started",
+      "title": { "en": "Container started", "de": "Container gestartet" }
+    },
+    {
+      "id": "lxc_stopped",
+      "title": { "en": "Container stopped", "de": "Container gestoppt" }
+    },
+    {
+      "id": "lxc_status_changed",
+      "title": { "en": "Status changed", "de": "Status geändert" },
+      "tokens": [
+        {
+          "name": "status",
+          "type": "string",
+          "title": { "en": "Status", "de": "Status" },
+          "example": "running"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "lxc_is_running",
+      "title": { "en": "Is running", "de": "Läuft" },
+      "titleFormatted": { "en": "Container !{{is|isn't}} running", "de": "Container !{{läuft|läuft nicht}}" }
+    }
+  ],
+  "actions": [
+    { "id": "lxc_start", "title": { "en": "Start", "de": "Starten" } },
+    { "id": "lxc_shutdown", "title": { "en": "Shut down (graceful)", "de": "Herunterfahren (regulär)" } },
+    { "id": "lxc_stop", "title": { "en": "Stop (force)", "de": "Stoppen (hart)" } },
+    { "id": "lxc_reboot", "title": { "en": "Reboot", "de": "Neustarten" } },
+    { "id": "lxc_suspend", "title": { "en": "Suspend", "de": "Pausieren" } },
+    { "id": "lxc_resume", "title": { "en": "Resume", "de": "Fortsetzen" } },
+    {
+      "id": "lxc_create_snapshot",
+      "title": { "en": "Create snapshot", "de": "Snapshot erstellen" },
+      "titleFormatted": {
+        "en": "Create snapshot [[name]] with description [[description]]",
+        "de": "Snapshot [[name]] mit Beschreibung [[description]] erstellen"
+      },
+      "args": [
+        { "name": "name", "type": "text", "placeholder": { "en": "snapshot name", "de": "Snapshot-Name" } },
+        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description (optional)", "de": "Beschreibung (optional)" } }
+      ]
+    },
+    {
+      "id": "lxc_rollback_snapshot",
+      "title": { "en": "Roll back to snapshot", "de": "Auf Snapshot zurücksetzen" },
+      "titleFormatted": { "en": "Roll back to [[snapshot]]", "de": "Zurücksetzen auf [[snapshot]]" },
+      "args": [
+        { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
+      ]
+    }
+  ]
+}

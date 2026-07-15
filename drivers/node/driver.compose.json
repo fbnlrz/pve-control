@@ -1,0 +1,31 @@
+{
+  "name": { "en": "Node", "de": "Node" },
+  "class": "other",
+  "capabilities": [
+    "pve_status",
+    "measure_cpu",
+    "measure_memory",
+    "measure_disk",
+    "measure_swap",
+    "measure_load",
+    "running_vms",
+    "uptime_text"
+  ],
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "icon": "/drivers/node/assets/icon.svg",
+  "images": {
+    "small": "/drivers/node/assets/images/small.png",
+    "large": "/drivers/node/assets/images/large.png",
+    "xlarge": "/drivers/node/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "connect" },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

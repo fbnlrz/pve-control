@@ -1,0 +1,72 @@
+[
+  {
+    "type": "group",
+    "label": { "en": "Connection", "de": "Verbindung" },
+    "children": [
+      {
+        "id": "host",
+        "type": "text",
+        "label": { "en": "Host / IP address", "de": "Host / IP-Adresse" },
+        "value": ""
+      },
+      {
+        "id": "port",
+        "type": "number",
+        "label": { "en": "Port", "de": "Port" },
+        "value": 8006,
+        "min": 1,
+        "max": 65535
+      },
+      {
+        "id": "tokenId",
+        "type": "text",
+        "label": { "en": "API token ID", "de": "API-Token-ID" },
+        "hint": {
+          "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+          "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+        },
+        "value": ""
+      },
+      {
+        "id": "tokenSecret",
+        "type": "password",
+        "label": { "en": "API token secret", "de": "API-Token-Secret" },
+        "value": ""
+      },
+      {
+        "id": "verifyTls",
+        "type": "checkbox",
+        "label": { "en": "Verify TLS certificate", "de": "TLS-Zertifikat prüfen" },
+        "hint": {
+          "en": "Disable for the default self-signed Proxmox certificate.",
+          "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+        },
+        "value": false
+      },
+      {
+        "id": "ca",
+        "type": "textarea",
+        "label": { "en": "Custom CA certificate (PEM)", "de": "Eigenes CA-Zertifikat (PEM)" },
+        "hint": {
+          "en": "Optional. When set, TLS is verified against this CA.",
+          "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+        },
+        "value": ""
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": { "en": "Polling", "de": "Abfrage" },
+    "children": [
+      {
+        "id": "pollInterval",
+        "type": "number",
+        "label": { "en": "Poll interval (seconds)", "de": "Abfrageintervall (Sekunden)" },
+        "value": 30,
+        "min": 5,
+        "max": 3600
+      }
+    ]
+  }
+]

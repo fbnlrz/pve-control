@@ -1,0 +1,1517 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.fbnlrz.pvecontrol",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Proxmox VE",
+    "de": "Proxmox VE"
+  },
+  "description": {
+    "en": "Monitor and control your Proxmox VE servers, virtual machines and containers.",
+    "de": "Überwache und steuere deine Proxmox-VE-Server, virtuellen Maschinen und Container."
+  },
+  "tags": {
+    "en": [
+      "proxmox",
+      "pve",
+      "virtualization",
+      "vm",
+      "lxc",
+      "server",
+      "homelab"
+    ],
+    "de": [
+      "proxmox",
+      "pve",
+      "virtualisierung",
+      "vm",
+      "lxc",
+      "server",
+      "homelab"
+    ]
+  },
+  "category": [
+    "tools"
+  ],
+  "brandColor": "#E57000",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "fbnlrz",
+    "email": "frlrnzn@gmail.com"
+  },
+  "source": "https://github.com/fbnlrz/pve-control",
+  "support": "https://github.com/fbnlrz/pve-control/issues",
+  "flow": {
+    "triggers": [
+      {
+        "id": "quorum_lost",
+        "title": {
+          "en": "Quorum lost",
+          "de": "Quorum verloren"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=cluster"
+          }
+        ]
+      },
+      {
+        "id": "quorum_restored",
+        "title": {
+          "en": "Quorum restored",
+          "de": "Quorum wiederhergestellt"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=cluster"
+          }
+        ]
+      },
+      {
+        "id": "lxc_started",
+        "title": {
+          "en": "Container started",
+          "de": "Container gestartet"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_stopped",
+        "title": {
+          "en": "Container stopped",
+          "de": "Container gestoppt"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_status_changed",
+        "title": {
+          "en": "Status changed",
+          "de": "Status geändert"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            },
+            "example": "running"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "node_online",
+        "title": {
+          "en": "Node came online",
+          "de": "Node wurde online"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=node"
+          }
+        ]
+      },
+      {
+        "id": "node_offline",
+        "title": {
+          "en": "Node went offline",
+          "de": "Node wurde offline"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=node"
+          }
+        ]
+      },
+      {
+        "id": "qemu_started",
+        "title": {
+          "en": "VM started",
+          "de": "VM gestartet"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_stopped",
+        "title": {
+          "en": "VM stopped",
+          "de": "VM gestoppt"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_status_changed",
+        "title": {
+          "en": "Status changed",
+          "de": "Status geändert"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            },
+            "example": "running"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_quorate",
+        "title": {
+          "en": "Is quorate",
+          "de": "Hat Quorum"
+        },
+        "titleFormatted": {
+          "en": "Cluster !{{is|isn't}} quorate",
+          "de": "Cluster !{{hat|hat kein}} Quorum"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=cluster"
+          }
+        ]
+      },
+      {
+        "id": "lxc_is_running",
+        "title": {
+          "en": "Is running",
+          "de": "Läuft"
+        },
+        "titleFormatted": {
+          "en": "Container !{{is|isn't}} running",
+          "de": "Container !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "qemu_is_running",
+        "title": {
+          "en": "Is running",
+          "de": "Läuft"
+        },
+        "titleFormatted": {
+          "en": "VM !{{is|isn't}} running",
+          "de": "VM !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "lxc_start",
+        "title": {
+          "en": "Start",
+          "de": "Starten"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_shutdown",
+        "title": {
+          "en": "Shut down (graceful)",
+          "de": "Herunterfahren (regulär)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_stop",
+        "title": {
+          "en": "Stop (force)",
+          "de": "Stoppen (hart)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_reboot",
+        "title": {
+          "en": "Reboot",
+          "de": "Neustarten"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_suspend",
+        "title": {
+          "en": "Suspend",
+          "de": "Pausieren"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_resume",
+        "title": {
+          "en": "Resume",
+          "de": "Fortsetzen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          }
+        ]
+      },
+      {
+        "id": "lxc_create_snapshot",
+        "title": {
+          "en": "Create snapshot",
+          "de": "Snapshot erstellen"
+        },
+        "titleFormatted": {
+          "en": "Create snapshot [[name]] with description [[description]]",
+          "de": "Snapshot [[name]] mit Beschreibung [[description]] erstellen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "placeholder": {
+              "en": "snapshot name",
+              "de": "Snapshot-Name"
+            }
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "required": false,
+            "placeholder": {
+              "en": "description (optional)",
+              "de": "Beschreibung (optional)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "lxc_rollback_snapshot",
+        "title": {
+          "en": "Roll back to snapshot",
+          "de": "Auf Snapshot zurücksetzen"
+        },
+        "titleFormatted": {
+          "en": "Roll back to [[snapshot]]",
+          "de": "Zurücksetzen auf [[snapshot]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lxc"
+          },
+          {
+            "name": "snapshot",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select snapshot",
+              "de": "Snapshot wählen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "node_reboot",
+        "title": {
+          "en": "Reboot node",
+          "de": "Node neu starten"
+        },
+        "hint": {
+          "en": "Reboots the physical Proxmox host. Use with care.",
+          "de": "Startet den physischen Proxmox-Host neu. Mit Vorsicht verwenden."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=node"
+          }
+        ]
+      },
+      {
+        "id": "node_shutdown",
+        "title": {
+          "en": "Shut down node",
+          "de": "Node herunterfahren"
+        },
+        "hint": {
+          "en": "Shuts down the physical Proxmox host. Use with care.",
+          "de": "Fährt den physischen Proxmox-Host herunter. Mit Vorsicht verwenden."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=node"
+          }
+        ]
+      },
+      {
+        "id": "qemu_start",
+        "title": {
+          "en": "Start",
+          "de": "Starten"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_shutdown",
+        "title": {
+          "en": "Shut down (graceful)",
+          "de": "Herunterfahren (regulär)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_stop",
+        "title": {
+          "en": "Stop (force)",
+          "de": "Stoppen (hart)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_reboot",
+        "title": {
+          "en": "Reboot",
+          "de": "Neustarten"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_reset",
+        "title": {
+          "en": "Reset (hard)",
+          "de": "Reset (hart)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_suspend",
+        "title": {
+          "en": "Suspend",
+          "de": "Pausieren"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_resume",
+        "title": {
+          "en": "Resume",
+          "de": "Fortsetzen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          }
+        ]
+      },
+      {
+        "id": "qemu_create_snapshot",
+        "title": {
+          "en": "Create snapshot",
+          "de": "Snapshot erstellen"
+        },
+        "titleFormatted": {
+          "en": "Create snapshot [[name]] with description [[description]]",
+          "de": "Snapshot [[name]] mit Beschreibung [[description]] erstellen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "placeholder": {
+              "en": "snapshot name",
+              "de": "Snapshot-Name"
+            }
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "required": false,
+            "placeholder": {
+              "en": "description (optional)",
+              "de": "Beschreibung (optional)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "qemu_rollback_snapshot",
+        "title": {
+          "en": "Roll back to snapshot",
+          "de": "Auf Snapshot zurücksetzen"
+        },
+        "titleFormatted": {
+          "en": "Roll back to [[snapshot]]",
+          "de": "Zurücksetzen auf [[snapshot]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=qemu"
+          },
+          {
+            "name": "snapshot",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "select snapshot",
+              "de": "Snapshot wählen"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Cluster",
+        "de": "Cluster"
+      },
+      "class": "other",
+      "capabilities": [
+        "pve_status",
+        "alarm_quorum",
+        "measure_cpu",
+        "measure_memory",
+        "running_vms",
+        "running_cts"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/cluster/assets/icon.svg",
+      "images": {
+        "small": "/drivers/cluster/assets/images/small.png",
+        "large": "/drivers/cluster/assets/images/large.png",
+        "xlarge": "/drivers/cluster/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "connect"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "cluster",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host / IP address",
+                "de": "Host / IP-Adresse"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 8006,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "tokenId",
+              "type": "text",
+              "label": {
+                "en": "API token ID",
+                "de": "API-Token-ID"
+              },
+              "hint": {
+                "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+                "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+              },
+              "value": ""
+            },
+            {
+              "id": "tokenSecret",
+              "type": "password",
+              "label": {
+                "en": "API token secret",
+                "de": "API-Token-Secret"
+              },
+              "value": ""
+            },
+            {
+              "id": "verifyTls",
+              "type": "checkbox",
+              "label": {
+                "en": "Verify TLS certificate",
+                "de": "TLS-Zertifikat prüfen"
+              },
+              "hint": {
+                "en": "Disable for the default self-signed Proxmox certificate.",
+                "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+              },
+              "value": false
+            },
+            {
+              "id": "ca",
+              "type": "textarea",
+              "label": {
+                "en": "Custom CA certificate (PEM)",
+                "de": "Eigenes CA-Zertifikat (PEM)"
+              },
+              "hint": {
+                "en": "Optional. When set, TLS is verified against this CA.",
+                "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 30,
+              "min": 5,
+              "max": 3600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "LXC Container",
+        "de": "LXC-Container"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "pve_status",
+        "measure_cpu",
+        "measure_memory",
+        "measure_disk",
+        "measure_netin",
+        "measure_netout",
+        "uptime_text"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Power",
+            "de": "Ein/Aus"
+          },
+          "setOnDim": false
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/lxc/assets/icon.svg",
+      "images": {
+        "small": "/drivers/lxc/assets/images/small.png",
+        "large": "/drivers/lxc/assets/images/large.png",
+        "xlarge": "/drivers/lxc/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "connect"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "lxc",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host / IP address",
+                "de": "Host / IP-Adresse"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 8006,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "tokenId",
+              "type": "text",
+              "label": {
+                "en": "API token ID",
+                "de": "API-Token-ID"
+              },
+              "hint": {
+                "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+                "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+              },
+              "value": ""
+            },
+            {
+              "id": "tokenSecret",
+              "type": "password",
+              "label": {
+                "en": "API token secret",
+                "de": "API-Token-Secret"
+              },
+              "value": ""
+            },
+            {
+              "id": "verifyTls",
+              "type": "checkbox",
+              "label": {
+                "en": "Verify TLS certificate",
+                "de": "TLS-Zertifikat prüfen"
+              },
+              "hint": {
+                "en": "Disable for the default self-signed Proxmox certificate.",
+                "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+              },
+              "value": false
+            },
+            {
+              "id": "ca",
+              "type": "textarea",
+              "label": {
+                "en": "Custom CA certificate (PEM)",
+                "de": "Eigenes CA-Zertifikat (PEM)"
+              },
+              "hint": {
+                "en": "Optional. When set, TLS is verified against this CA.",
+                "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 30,
+              "min": 5,
+              "max": 3600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Node",
+        "de": "Node"
+      },
+      "class": "other",
+      "capabilities": [
+        "pve_status",
+        "measure_cpu",
+        "measure_memory",
+        "measure_disk",
+        "measure_swap",
+        "measure_load",
+        "running_vms",
+        "uptime_text"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/node/assets/icon.svg",
+      "images": {
+        "small": "/drivers/node/assets/images/small.png",
+        "large": "/drivers/node/assets/images/large.png",
+        "xlarge": "/drivers/node/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "connect"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "node",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host / IP address",
+                "de": "Host / IP-Adresse"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 8006,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "tokenId",
+              "type": "text",
+              "label": {
+                "en": "API token ID",
+                "de": "API-Token-ID"
+              },
+              "hint": {
+                "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+                "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+              },
+              "value": ""
+            },
+            {
+              "id": "tokenSecret",
+              "type": "password",
+              "label": {
+                "en": "API token secret",
+                "de": "API-Token-Secret"
+              },
+              "value": ""
+            },
+            {
+              "id": "verifyTls",
+              "type": "checkbox",
+              "label": {
+                "en": "Verify TLS certificate",
+                "de": "TLS-Zertifikat prüfen"
+              },
+              "hint": {
+                "en": "Disable for the default self-signed Proxmox certificate.",
+                "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+              },
+              "value": false
+            },
+            {
+              "id": "ca",
+              "type": "textarea",
+              "label": {
+                "en": "Custom CA certificate (PEM)",
+                "de": "Eigenes CA-Zertifikat (PEM)"
+              },
+              "hint": {
+                "en": "Optional. When set, TLS is verified against this CA.",
+                "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 30,
+              "min": 5,
+              "max": 3600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Virtual Machine",
+        "de": "Virtuelle Maschine"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "pve_status",
+        "measure_cpu",
+        "measure_memory",
+        "measure_disk",
+        "measure_netin",
+        "measure_netout",
+        "uptime_text"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Power",
+            "de": "Ein/Aus"
+          },
+          "setOnDim": false
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/qemu/assets/icon.svg",
+      "images": {
+        "small": "/drivers/qemu/assets/images/small.png",
+        "large": "/drivers/qemu/assets/images/large.png",
+        "xlarge": "/drivers/qemu/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "connect"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "qemu",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host / IP address",
+                "de": "Host / IP-Adresse"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 8006,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "tokenId",
+              "type": "text",
+              "label": {
+                "en": "API token ID",
+                "de": "API-Token-ID"
+              },
+              "hint": {
+                "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+                "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+              },
+              "value": ""
+            },
+            {
+              "id": "tokenSecret",
+              "type": "password",
+              "label": {
+                "en": "API token secret",
+                "de": "API-Token-Secret"
+              },
+              "value": ""
+            },
+            {
+              "id": "verifyTls",
+              "type": "checkbox",
+              "label": {
+                "en": "Verify TLS certificate",
+                "de": "TLS-Zertifikat prüfen"
+              },
+              "hint": {
+                "en": "Disable for the default self-signed Proxmox certificate.",
+                "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+              },
+              "value": false
+            },
+            {
+              "id": "ca",
+              "type": "textarea",
+              "label": {
+                "en": "Custom CA certificate (PEM)",
+                "de": "Eigenes CA-Zertifikat (PEM)"
+              },
+              "hint": {
+                "en": "Optional. When set, TLS is verified against this CA.",
+                "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 30,
+              "min": 5,
+              "max": 3600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Storage",
+        "de": "Speicher"
+      },
+      "class": "other",
+      "capabilities": [
+        "pve_status",
+        "measure_disk"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/storage/assets/icon.svg",
+      "images": {
+        "small": "/drivers/storage/assets/images/small.png",
+        "large": "/drivers/storage/assets/images/large.png",
+        "xlarge": "/drivers/storage/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "connect"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "storage",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host / IP address",
+                "de": "Host / IP-Adresse"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 8006,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "tokenId",
+              "type": "text",
+              "label": {
+                "en": "API token ID",
+                "de": "API-Token-ID"
+              },
+              "hint": {
+                "en": "Format: user@realm!tokenname, e.g. root@pam!homey",
+                "de": "Format: user@realm!tokenname, z. B. root@pam!homey"
+              },
+              "value": ""
+            },
+            {
+              "id": "tokenSecret",
+              "type": "password",
+              "label": {
+                "en": "API token secret",
+                "de": "API-Token-Secret"
+              },
+              "value": ""
+            },
+            {
+              "id": "verifyTls",
+              "type": "checkbox",
+              "label": {
+                "en": "Verify TLS certificate",
+                "de": "TLS-Zertifikat prüfen"
+              },
+              "hint": {
+                "en": "Disable for the default self-signed Proxmox certificate.",
+                "de": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktivieren."
+              },
+              "value": false
+            },
+            {
+              "id": "ca",
+              "type": "textarea",
+              "label": {
+                "en": "Custom CA certificate (PEM)",
+                "de": "Eigenes CA-Zertifikat (PEM)"
+              },
+              "hint": {
+                "en": "Optional. When set, TLS is verified against this CA.",
+                "de": "Optional. Wenn gesetzt, wird TLS gegen diese CA geprüft."
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 30,
+              "min": 5,
+              "max": 3600
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "alarm_quorum": {
+      "type": "boolean",
+      "title": {
+        "en": "Quorum lost",
+        "de": "Quorum verloren"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "measure_cpu": {
+      "type": "number",
+      "title": {
+        "en": "CPU load",
+        "de": "CPU-Last"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "%",
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "insights": true
+    },
+    "measure_disk": {
+      "type": "number",
+      "title": {
+        "en": "Disk usage",
+        "de": "Festplattenauslastung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "%",
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "insights": true
+    },
+    "measure_load": {
+      "type": "number",
+      "title": {
+        "en": "Load average (1m)",
+        "de": "Lastdurchschnitt (1m)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "decimals": 2,
+      "min": 0,
+      "insights": true
+    },
+    "measure_memory": {
+      "type": "number",
+      "title": {
+        "en": "Memory usage",
+        "de": "Speicherauslastung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "%",
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "insights": true
+    },
+    "measure_netin": {
+      "type": "number",
+      "title": {
+        "en": "Network in",
+        "de": "Netzwerk ein"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "Mbit/s",
+      "decimals": 2,
+      "min": 0,
+      "insights": true
+    },
+    "measure_netout": {
+      "type": "number",
+      "title": {
+        "en": "Network out",
+        "de": "Netzwerk aus"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "Mbit/s",
+      "decimals": 2,
+      "min": 0,
+      "insights": true
+    },
+    "measure_swap": {
+      "type": "number",
+      "title": {
+        "en": "Swap usage",
+        "de": "Swap-Auslastung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": "%",
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "insights": true
+    },
+    "pve_status": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": false
+    },
+    "running_cts": {
+      "type": "number",
+      "title": {
+        "en": "Running containers",
+        "de": "Laufende Container"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "decimals": 0,
+      "min": 0,
+      "insights": true
+    },
+    "running_vms": {
+      "type": "number",
+      "title": {
+        "en": "Running VMs",
+        "de": "Laufende VMs"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "decimals": 0,
+      "min": 0,
+      "insights": true
+    },
+    "uptime_text": {
+      "type": "string",
+      "title": {
+        "en": "Uptime",
+        "de": "Betriebszeit"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": false
+    }
+  }
+}

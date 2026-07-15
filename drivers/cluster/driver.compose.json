@@ -1,0 +1,29 @@
+{
+  "name": { "en": "Cluster", "de": "Cluster" },
+  "class": "other",
+  "capabilities": [
+    "pve_status",
+    "alarm_quorum",
+    "measure_cpu",
+    "measure_memory",
+    "running_vms",
+    "running_cts"
+  ],
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "icon": "/drivers/cluster/assets/icon.svg",
+  "images": {
+    "small": "/drivers/cluster/assets/images/small.png",
+    "large": "/drivers/cluster/assets/images/large.png",
+    "xlarge": "/drivers/cluster/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "connect" },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

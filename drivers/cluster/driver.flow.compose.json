@@ -1,0 +1,20 @@
+{
+  "triggers": [
+    {
+      "id": "quorum_lost",
+      "title": { "en": "Quorum lost", "de": "Quorum verloren" }
+    },
+    {
+      "id": "quorum_restored",
+      "title": { "en": "Quorum restored", "de": "Quorum wiederhergestellt" }
+    }
+  ],
+  "conditions": [
+    {
+      "id": "is_quorate",
+      "title": { "en": "Is quorate", "de": "Hat Quorum" },
+      "titleFormatted": { "en": "Cluster !{{is|isn't}} quorate", "de": "Cluster !{{hat|hat kein}} Quorum" }
+    }
+  ],
+  "actions": []
+}

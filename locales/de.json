@@ -1,0 +1,27 @@
+{
+  "error": {
+    "unreachable": "Proxmox-Server nicht erreichbar",
+    "auth": "Authentifizierung fehlgeschlagen – API-Token prüfen",
+    "permission": "Zugriff verweigert – Token-Berechtigungen prüfen",
+    "not_found": "Ressource auf dem Proxmox-Server nicht gefunden"
+  },
+  "pair": {
+    "host": "Host / IP-Adresse",
+    "port": "Port",
+    "tokenId": "API-Token-ID",
+    "tokenIdHint": "Format: user@realm!tokenname",
+    "tokenSecret": "API-Token-Secret",
+    "verifyTls": "TLS-Zertifikat prüfen",
+    "verifyTlsHint": "Für das selbstsignierte Standard-Zertifikat von Proxmox deaktiviert lassen.",
+    "connect": "Verbinden",
+    "connected": "Verbunden mit Proxmox VE",
+    "missingFields": "Bitte Host, Token-ID und Token-Secret ausfüllen.",
+    "not_connected": "Nicht mit Proxmox verbunden"
+  },
+  "settings": {
+    "title": "Standard-Verbindung",
+    "subtitle": "Diese Werte füllen die Kopplungsmaske beim Hinzufügen eines neuen Geräts vor.",
+    "save": "Speichern",
+    "saved": "Gespeichert"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": { "en": "Storage", "de": "Speicher" },
+  "class": "other",
+  "capabilities": [
+    "pve_status",
+    "measure_disk"
+  ],
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "icon": "/drivers/storage/assets/icon.svg",
+  "images": {
+    "small": "/drivers/storage/assets/images/small.png",
+    "large": "/drivers/storage/assets/images/large.png",
+    "xlarge": "/drivers/storage/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "connect" },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

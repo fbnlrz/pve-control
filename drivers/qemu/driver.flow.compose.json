@@ -1,0 +1,60 @@
+{
+  "triggers": [
+    {
+      "id": "qemu_started",
+      "title": { "en": "VM started", "de": "VM gestartet" }
+    },
+    {
+      "id": "qemu_stopped",
+      "title": { "en": "VM stopped", "de": "VM gestoppt" }
+    },
+    {
+      "id": "qemu_status_changed",
+      "title": { "en": "Status changed", "de": "Status geändert" },
+      "tokens": [
+        {
+          "name": "status",
+          "type": "string",
+          "title": { "en": "Status", "de": "Status" },
+          "example": "running"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "qemu_is_running",
+      "title": { "en": "Is running", "de": "Läuft" },
+      "titleFormatted": { "en": "VM !{{is|isn't}} running", "de": "VM !{{läuft|läuft nicht}}" }
+    }
+  ],
+  "actions": [
+    { "id": "qemu_start", "title": { "en": "Start", "de": "Starten" } },
+    { "id": "qemu_shutdown", "title": { "en": "Shut down (graceful)", "de": "Herunterfahren (regulär)" } },
+    { "id": "qemu_stop", "title": { "en": "Stop (force)", "de": "Stoppen (hart)" } },
+    { "id": "qemu_reboot", "title": { "en": "Reboot", "de": "Neustarten" } },
+    { "id": "qemu_reset", "title": { "en": "Reset (hard)", "de": "Reset (hart)" } },
+    { "id": "qemu_suspend", "title": { "en": "Suspend", "de": "Pausieren" } },
+    { "id": "qemu_resume", "title": { "en": "Resume", "de": "Fortsetzen" } },
+    {
+      "id": "qemu_create_snapshot",
+      "title": { "en": "Create snapshot", "de": "Snapshot erstellen" },
+      "titleFormatted": {
+        "en": "Create snapshot [[name]] with description [[description]]",
+        "de": "Snapshot [[name]] mit Beschreibung [[description]] erstellen"
+      },
+      "args": [
+        { "name": "name", "type": "text", "placeholder": { "en": "snapshot name", "de": "Snapshot-Name" } },
+        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description (optional)", "de": "Beschreibung (optional)" } }
+      ]
+    },
+    {
+      "id": "qemu_rollback_snapshot",
+      "title": { "en": "Roll back to snapshot", "de": "Auf Snapshot zurücksetzen" },
+      "titleFormatted": { "en": "Roll back to [[snapshot]]", "de": "Zurücksetzen auf [[snapshot]]" },
+      "args": [
+        { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
+      ]
+    }
+  ]
+}

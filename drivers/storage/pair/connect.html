@@ -1,0 +1,123 @@
+<!-- Proxmox connection entry view. Shared across all drivers. -->
+<style>
+  .pve-field { margin-bottom: 14px; }
+  .pve-row { display: flex; gap: 10px; }
+  .pve-row .pve-field { flex: 1; }
+  .pve-hint { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+  .pve-error {
+    display: none;
+    color: #fff;
+    background: #e74c3c;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .pve-ok {
+    display: none;
+    color: #fff;
+    background: #2ecc71;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+</style>
+
+<div class="homey-form-group">
+  <div id="pve-error" class="pve-error"></div>
+  <div id="pve-ok" class="pve-ok"></div>
+
+  <div class="pve-row">
+    <div class="pve-field" style="flex: 3;">
+      <label class="homey-form-label" data-i18n="pair.host">Host / IP address</label>
+      <input id="host" class="homey-form-input" type="text" placeholder="192.168.1.10" />
+    </div>
+    <div class="pve-field" style="flex: 1;">
+      <label class="homey-form-label" data-i18n="pair.port">Port</label>
+      <input id="port" class="homey-form-input" type="number" value="8006" />
+    </div>
+  </div>
+
+  <div class="pve-field">
+    <label class="homey-form-label" data-i18n="pair.tokenId">API token ID</label>
+    <input id="tokenId" class="homey-form-input" type="text" placeholder="root@pam!homey" />
+    <div class="pve-hint" data-i18n="pair.tokenIdHint">Format: user@realm!tokenname</div>
+  </div>
+
+  <div class="pve-field">
+    <label class="homey-form-label" data-i18n="pair.tokenSecret">API token secret</label>
+    <input id="tokenSecret" class="homey-form-input" type="password" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+  </div>
+
+  <div class="pve-field">
+    <label class="homey-form-checkbox">
+      <input id="verifyTls" type="checkbox" class="homey-form-checkbox-input" />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="pair.verifyTls">Verify TLS certificate</span>
+    </label>
+    <div class="pve-hint" data-i18n="pair.verifyTlsHint">Leave off for the default self-signed Proxmox certificate.</div>
+  </div>
+</div>
+
+<button id="pve-connect" class="homey-button-primary-full" data-i18n="pair.connect">Connect</button>
+
+<script type="application/javascript">
+  function $(id) { return document.getElementById(id); }
+
+  function showError(message) {
+    var el = $('pve-error');
+    el.textContent = message;
+    el.style.display = 'block';
+    $('pve-ok').style.display = 'none';
+  }
+
+  function showOk(message) {
+    var el = $('pve-ok');
+    el.textContent = message;
+    el.style.display = 'block';
+    $('pve-error').style.display = 'none';
+  }
+
+  function collect() {
+    return {
+      host: $('host').value.trim(),
+      port: parseInt($('port').value, 10) || 8006,
+      tokenId: $('tokenId').value.trim(),
+      tokenSecret: $('tokenSecret').value.trim(),
+      verifyTls: $('verifyTls').checked,
+    };
+  }
+
+  Homey.emit('getDefaults').then(function (d) {
+    if (!d) return;
+    if (d.host) $('host').value = d.host;
+    if (d.port) $('port').value = d.port;
+    if (d.tokenId) $('tokenId').value = d.tokenId;
+    if (d.tokenSecret) $('tokenSecret').value = d.tokenSecret;
+    $('verifyTls').checked = !!d.verifyTls;
+  }).catch(function () {});
+
+  $('pve-connect').addEventListener('click', function () {
+    var creds = collect();
+    if (!creds.host || !creds.tokenId || !creds.tokenSecret) {
+      showError(Homey.__('pair.missingFields'));
+      return;
+    }
+    $('pve-connect').disabled = true;
+    Homey.showLoadingOverlay();
+    Homey.emit('validate', creds)
+      .then(function (res) {
+        Homey.hideLoadingOverlay();
+        showOk(Homey.__('pair.connected') + ' ' + (res && res.version ? res.version : ''));
+        Homey.showView('list_devices');
+      })
+      .catch(function (err) {
+        Homey.hideLoadingOverlay();
+        $('pve-connect').disabled = false;
+        showError((err && err.message) ? err.message : String(err));
+      });
+  });
+
+  Homey.ready();
+</script>

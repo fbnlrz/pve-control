@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "title": { "en": "Uptime", "de": "Betriebszeit" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": false
+}

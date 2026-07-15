@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": { "en": "Swap usage", "de": "Swap-Auslastung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": "%",
+  "decimals": 1,
+  "min": 0,
+  "max": 100,
+  "insights": true
+}
