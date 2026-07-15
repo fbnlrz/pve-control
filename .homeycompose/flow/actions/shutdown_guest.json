@@ -1,6 +1,6 @@
 {
   "id": "shutdown_guest",
-  "title": { "en": "Shut down a VM / container", "de": "VM / Container herunterfahren" },
+  "title": { "en": "Shut down a guest", "de": "Gast herunterfahren" },
   "titleFormatted": { "en": "Shut down [[guest]]", "de": "[[guest]] herunterfahren" },
   "hint": {
     "en": "Gracefully shut down any VM or container by name.",

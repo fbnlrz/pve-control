@@ -1,6 +1,6 @@
 {
   "id": "stop_guest",
-  "title": { "en": "Stop a VM / container (force)", "de": "VM / Container stoppen (hart)" },
+  "title": { "en": "Stop a guest", "de": "Gast stoppen" },
   "titleFormatted": { "en": "Stop [[guest]]", "de": "[[guest]] stoppen" },
   "hint": {
     "en": "Immediately stop any VM or container by name.",

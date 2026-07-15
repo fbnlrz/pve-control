@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+  <g transform="scale(15)">
   <g fill="#000000">
     <path d="M18 6h28a6 6 0 0 1 6 6v40a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V12a6 6 0 0 1 6-6zm0 6v40h28V12H18z"/>
     <rect x="22" y="18" width="20" height="4" rx="2"/>
     <rect x="22" y="26" width="20" height="4" rx="2" opacity="0.8"/>
     <circle cx="24" cy="46" r="3"/>
   </g>
+</g>
 </svg>

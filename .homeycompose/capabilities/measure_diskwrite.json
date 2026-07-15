@@ -2,7 +2,7 @@
   "type": "number",
   "title": {
     "en": "Disk write",
-    "de": "Disk schreiben"
+    "de": "Disk-Schreiben"
   },
   "uiComponent": "sensor",
   "getable": true,

@@ -8,12 +8,12 @@
     "local"
   ],
   "name": {
-    "en": "PVE-Control",
-    "de": "PVE-Control"
+    "en": "Prox-Control",
+    "de": "Prox-Control"
   },
   "description": {
-    "en": "Monitor and control your Proxmox VE servers, virtual machines and containers.",
-    "de": "Überwache und steuere deine Proxmox-VE-Server, virtuellen Maschinen und Container."
+    "en": "Bring your Proxmox homelab into Homey with live sensors, control and widgets.",
+    "de": "Hol dein Proxmox-Homelab in Homey – mit Live-Sensoren, Steuerung und Widgets."
   },
   "tags": {
     "en": [
@@ -50,7 +50,11 @@
     "email": "frlrnzn@gmail.com"
   },
   "source": "https://github.com/fbnlrz/pve-control",
+  "homepage": "https://github.com/fbnlrz/pve-control",
   "support": "https://github.com/fbnlrz/pve-control/issues",
+  "bugs": {
+    "url": "https://github.com/fbnlrz/pve-control/issues"
+  },
   "homeyCommunityTopicId": 157223,
   "flow": {
     "triggers": [
@@ -223,8 +227,8 @@
       {
         "id": "lxc_started",
         "title": {
-          "en": "Container started",
-          "de": "Container gestartet"
+          "en": "Started",
+          "de": "Gestartet"
         },
         "args": [
           {
@@ -237,8 +241,8 @@
       {
         "id": "lxc_stopped",
         "title": {
-          "en": "Container stopped",
-          "de": "Container gestoppt"
+          "en": "Stopped",
+          "de": "Gestoppt"
         },
         "args": [
           {
@@ -276,8 +280,8 @@
       {
         "id": "node_online",
         "title": {
-          "en": "Node came online",
-          "de": "Node wurde online"
+          "en": "Came online",
+          "de": "Wurde online"
         },
         "args": [
           {
@@ -290,8 +294,8 @@
       {
         "id": "node_offline",
         "title": {
-          "en": "Node went offline",
-          "de": "Node wurde offline"
+          "en": "Went offline",
+          "de": "Wurde offline"
         },
         "args": [
           {
@@ -304,8 +308,8 @@
       {
         "id": "qemu_started",
         "title": {
-          "en": "VM started",
-          "de": "VM gestartet"
+          "en": "Started",
+          "de": "Gestartet"
         },
         "args": [
           {
@@ -318,8 +322,8 @@
       {
         "id": "qemu_stopped",
         "title": {
-          "en": "VM stopped",
-          "de": "VM gestoppt"
+          "en": "Stopped",
+          "de": "Gestoppt"
         },
         "args": [
           {
@@ -420,8 +424,8 @@
       {
         "id": "shutdown_guest",
         "title": {
-          "en": "Shut down a VM / container",
-          "de": "VM / Container herunterfahren"
+          "en": "Shut down a guest",
+          "de": "Gast herunterfahren"
         },
         "titleFormatted": {
           "en": "Shut down [[guest]]",
@@ -445,8 +449,8 @@
       {
         "id": "start_guest",
         "title": {
-          "en": "Start a VM / container",
-          "de": "VM / Container starten"
+          "en": "Start a guest",
+          "de": "Gast starten"
         },
         "titleFormatted": {
           "en": "Start [[guest]]",
@@ -470,8 +474,8 @@
       {
         "id": "stop_guest",
         "title": {
-          "en": "Stop a VM / container (force)",
-          "de": "VM / Container stoppen (hart)"
+          "en": "Stop a guest",
+          "de": "Gast stoppen"
         },
         "titleFormatted": {
           "en": "Stop [[guest]]",
@@ -509,8 +513,12 @@
       {
         "id": "lxc_shutdown",
         "title": {
-          "en": "Shut down (graceful)",
-          "de": "Herunterfahren (regulär)"
+          "en": "Shut down",
+          "de": "Herunterfahren"
+        },
+        "hint": {
+          "en": "Sends a graceful shutdown request.",
+          "de": "Sendet eine reguläre Herunterfahren-Anfrage."
         },
         "args": [
           {
@@ -523,8 +531,12 @@
       {
         "id": "lxc_stop",
         "title": {
-          "en": "Stop (force)",
-          "de": "Stoppen (hart)"
+          "en": "Stop",
+          "de": "Stoppen"
+        },
+        "hint": {
+          "en": "Immediately stops the container; unsaved data may be lost.",
+          "de": "Stoppt den Container sofort; ungespeicherte Daten können verloren gehen."
         },
         "args": [
           {
@@ -605,8 +617,8 @@
             "type": "text",
             "required": false,
             "placeholder": {
-              "en": "description (optional)",
-              "de": "Beschreibung (optional)"
+              "en": "description",
+              "de": "Beschreibung"
             }
           }
         ]
@@ -620,6 +632,10 @@
         "titleFormatted": {
           "en": "Roll back to [[snapshot]]",
           "de": "Zurücksetzen auf [[snapshot]]"
+        },
+        "hint": {
+          "en": "Discards all changes made since the snapshot was taken.",
+          "de": "Verwirft alle Änderungen seit dem Snapshot."
         },
         "args": [
           {
@@ -644,8 +660,8 @@
           "de": "Backup erstellen"
         },
         "titleFormatted": {
-          "en": "Back up to [[storage]] (mode [[mode]])",
-          "de": "Backup auf [[storage]] (Modus [[mode]])"
+          "en": "Back up to [[storage]] in [[mode]] mode",
+          "de": "Backup auf [[storage]] im Modus [[mode]]"
         },
         "args": [
           {
@@ -668,8 +684,8 @@
               {
                 "id": "snapshot",
                 "label": {
-                  "en": "Snapshot (no downtime)",
-                  "de": "Snapshot (ohne Ausfall)"
+                  "en": "Snapshot",
+                  "de": "Snapshot"
                 }
               },
               {
@@ -740,8 +756,8 @@
       {
         "id": "node_reboot",
         "title": {
-          "en": "Reboot node",
-          "de": "Node neu starten"
+          "en": "Reboot",
+          "de": "Neustarten"
         },
         "hint": {
           "en": "Reboots the physical Proxmox host. Use with care.",
@@ -758,8 +774,8 @@
       {
         "id": "node_shutdown",
         "title": {
-          "en": "Shut down node",
-          "de": "Node herunterfahren"
+          "en": "Shut down",
+          "de": "Herunterfahren"
         },
         "hint": {
           "en": "Shuts down the physical Proxmox host. Use with care.",
@@ -790,8 +806,12 @@
       {
         "id": "qemu_shutdown",
         "title": {
-          "en": "Shut down (graceful)",
-          "de": "Herunterfahren (regulär)"
+          "en": "Shut down",
+          "de": "Herunterfahren"
+        },
+        "hint": {
+          "en": "Sends a graceful ACPI shutdown request.",
+          "de": "Sendet eine reguläre ACPI-Herunterfahren-Anfrage."
         },
         "args": [
           {
@@ -804,8 +824,12 @@
       {
         "id": "qemu_stop",
         "title": {
-          "en": "Stop (force)",
-          "de": "Stoppen (hart)"
+          "en": "Stop",
+          "de": "Stoppen"
+        },
+        "hint": {
+          "en": "Immediately powers off the VM; unsaved data may be lost.",
+          "de": "Schaltet die VM sofort aus; ungespeicherte Daten können verloren gehen."
         },
         "args": [
           {
@@ -832,8 +856,12 @@
       {
         "id": "qemu_reset",
         "title": {
-          "en": "Reset (hard)",
-          "de": "Reset (hart)"
+          "en": "Reset",
+          "de": "Zurücksetzen"
+        },
+        "hint": {
+          "en": "Performs an immediate hard reset, like pressing the reset button.",
+          "de": "Führt einen sofortigen harten Reset aus, wie das Drücken der Reset-Taste."
         },
         "args": [
           {
@@ -900,8 +928,8 @@
             "type": "text",
             "required": false,
             "placeholder": {
-              "en": "description (optional)",
-              "de": "Beschreibung (optional)"
+              "en": "description",
+              "de": "Beschreibung"
             }
           }
         ]
@@ -915,6 +943,10 @@
         "titleFormatted": {
           "en": "Roll back to [[snapshot]]",
           "de": "Zurücksetzen auf [[snapshot]]"
+        },
+        "hint": {
+          "en": "Discards all changes made since the snapshot was taken.",
+          "de": "Verwirft alle Änderungen seit dem Snapshot."
         },
         "args": [
           {
@@ -939,8 +971,8 @@
           "de": "Backup erstellen"
         },
         "titleFormatted": {
-          "en": "Back up to [[storage]] (mode [[mode]])",
-          "de": "Backup auf [[storage]] (Modus [[mode]])"
+          "en": "Back up to [[storage]] in [[mode]] mode",
+          "de": "Backup auf [[storage]] im Modus [[mode]]"
         },
         "args": [
           {
@@ -963,8 +995,8 @@
               {
                 "id": "snapshot",
                 "label": {
-                  "en": "Snapshot (no downtime)",
-                  "de": "Snapshot (ohne Ausfall)"
+                  "en": "Snapshot",
+                  "de": "Snapshot"
                 }
               },
               {
@@ -994,6 +1026,10 @@
         "titleFormatted": {
           "en": "Move disk [[disk]] to [[storage]], delete source [[delete_source]]",
           "de": "Disk [[disk]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
+        },
+        "hint": {
+          "en": "Moves the disk to another datastore. With delete source on, the original copy is removed.",
+          "de": "Verschiebt die Disk auf einen anderen Datastore. Mit „Quelle löschen“ wird die Originalkopie entfernt."
         },
         "args": [
           {
@@ -1055,8 +1091,8 @@
           "de": "Läuft"
         },
         "titleFormatted": {
-          "en": "Container !{{is|isn't}} running",
-          "de": "Container !{{läuft|läuft nicht}}"
+          "en": "!{{Is|Isn't}} running",
+          "de": "!{{Läuft|Läuft nicht}}"
         },
         "args": [
           {
@@ -1073,8 +1109,8 @@
           "de": "Läuft"
         },
         "titleFormatted": {
-          "en": "VM !{{is|isn't}} running",
-          "de": "VM !{{läuft|läuft nicht}}"
+          "en": "!{{Is|Isn't}} running",
+          "de": "!{{Läuft|Läuft nicht}}"
         },
         "args": [
           {
@@ -2105,7 +2141,7 @@
       "type": "number",
       "title": {
         "en": "Disk read",
-        "de": "Disk lesen"
+        "de": "Disk-Lesen"
       },
       "uiComponent": "sensor",
       "getable": true,
@@ -2120,7 +2156,7 @@
       "type": "number",
       "title": {
         "en": "Disk write",
-        "de": "Disk schreiben"
+        "de": "Disk-Schreiben"
       },
       "uiComponent": "sensor",
       "getable": true,
@@ -2165,7 +2201,7 @@
       "type": "number",
       "title": {
         "en": "Network in",
-        "de": "Netzwerk ein"
+        "de": "Netzwerk eingehend"
       },
       "uiComponent": "sensor",
       "getable": true,
@@ -2180,7 +2216,7 @@
       "type": "number",
       "title": {
         "en": "Network out",
-        "de": "Netzwerk aus"
+        "de": "Netzwerk ausgehend"
       },
       "uiComponent": "sensor",
       "getable": true,

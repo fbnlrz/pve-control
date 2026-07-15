@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+  <g transform="scale(15)">
   <g fill="#000000">
     <path d="M30 4l14 8v16l-14 8-14-8V12l14-8z" opacity="0.5" transform="translate(2 0)"/>
     <circle cx="32" cy="14" r="8"/>
@@ -8,4 +9,5 @@
     <path d="M32 20L16 42M32 20l16 22" stroke="#000000" stroke-width="3" fill="none"/>
     <path d="M20 46h24" stroke="#000000" stroke-width="3" fill="none"/>
   </g>
+</g>
 </svg>

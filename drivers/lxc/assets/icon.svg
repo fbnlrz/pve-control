@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+  <g transform="scale(15)">
   <g fill="#000000">
     <path d="M32 6l24 12v28L32 58 8 46V18L32 6zm0 4.6L13 20v23.5l19 9.5 19-9.5V20L32 10.6z"/>
     <path d="M32 22l12 6-12 6-12-6 12-6z"/>
     <path d="M20 33l10 5v11l-10-5V33zm24 0v11l-10 5V38l10-5z" opacity="0.8"/>
   </g>
+</g>
 </svg>

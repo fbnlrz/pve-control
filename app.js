@@ -26,7 +26,7 @@ class PveControlApp extends Homey.App {
     this._registerGuestActions();
     this._registerWidgets();
 
-    this.log('PVE-Control app has been initialized');
+    this.log('Prox-Control app has been initialized');
   }
 
   /* ----------------------------------------------------------------------- */

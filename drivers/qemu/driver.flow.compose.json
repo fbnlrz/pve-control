@@ -2,11 +2,11 @@
   "triggers": [
     {
       "id": "qemu_started",
-      "title": { "en": "VM started", "de": "VM gestartet" }
+      "title": { "en": "Started", "de": "Gestartet" }
     },
     {
       "id": "qemu_stopped",
-      "title": { "en": "VM stopped", "de": "VM gestoppt" }
+      "title": { "en": "Stopped", "de": "Gestoppt" }
     },
     {
       "id": "qemu_status_changed",
@@ -25,15 +25,27 @@
     {
       "id": "qemu_is_running",
       "title": { "en": "Is running", "de": "Läuft" },
-      "titleFormatted": { "en": "VM !{{is|isn't}} running", "de": "VM !{{läuft|läuft nicht}}" }
+      "titleFormatted": { "en": "!{{Is|Isn't}} running", "de": "!{{Läuft|Läuft nicht}}" }
     }
   ],
   "actions": [
     { "id": "qemu_start", "title": { "en": "Start", "de": "Starten" } },
-    { "id": "qemu_shutdown", "title": { "en": "Shut down (graceful)", "de": "Herunterfahren (regulär)" } },
-    { "id": "qemu_stop", "title": { "en": "Stop (force)", "de": "Stoppen (hart)" } },
+    {
+      "id": "qemu_shutdown",
+      "title": { "en": "Shut down", "de": "Herunterfahren" },
+      "hint": { "en": "Sends a graceful ACPI shutdown request.", "de": "Sendet eine reguläre ACPI-Herunterfahren-Anfrage." }
+    },
+    {
+      "id": "qemu_stop",
+      "title": { "en": "Stop", "de": "Stoppen" },
+      "hint": { "en": "Immediately powers off the VM; unsaved data may be lost.", "de": "Schaltet die VM sofort aus; ungespeicherte Daten können verloren gehen." }
+    },
     { "id": "qemu_reboot", "title": { "en": "Reboot", "de": "Neustarten" } },
-    { "id": "qemu_reset", "title": { "en": "Reset (hard)", "de": "Reset (hart)" } },
+    {
+      "id": "qemu_reset",
+      "title": { "en": "Reset", "de": "Zurücksetzen" },
+      "hint": { "en": "Performs an immediate hard reset, like pressing the reset button.", "de": "Führt einen sofortigen harten Reset aus, wie das Drücken der Reset-Taste." }
+    },
     { "id": "qemu_suspend", "title": { "en": "Suspend", "de": "Pausieren" } },
     { "id": "qemu_resume", "title": { "en": "Resume", "de": "Fortsetzen" } },
     {
@@ -45,13 +57,14 @@
       },
       "args": [
         { "name": "name", "type": "text", "placeholder": { "en": "snapshot name", "de": "Snapshot-Name" } },
-        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description (optional)", "de": "Beschreibung (optional)" } }
+        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description", "de": "Beschreibung" } }
       ]
     },
     {
       "id": "qemu_rollback_snapshot",
       "title": { "en": "Roll back to snapshot", "de": "Auf Snapshot zurücksetzen" },
       "titleFormatted": { "en": "Roll back to [[snapshot]]", "de": "Zurücksetzen auf [[snapshot]]" },
+      "hint": { "en": "Discards all changes made since the snapshot was taken.", "de": "Verwirft alle Änderungen seit dem Snapshot." },
       "args": [
         { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
       ]
@@ -60,8 +73,8 @@
       "id": "qemu_backup",
       "title": { "en": "Create backup", "de": "Backup erstellen" },
       "titleFormatted": {
-        "en": "Back up to [[storage]] (mode [[mode]])",
-        "de": "Backup auf [[storage]] (Modus [[mode]])"
+        "en": "Back up to [[storage]] in [[mode]] mode",
+        "de": "Backup auf [[storage]] im Modus [[mode]]"
       },
       "args": [
         { "name": "storage", "type": "autocomplete", "placeholder": { "en": "backup storage", "de": "Backup-Storage" } },
@@ -69,7 +82,7 @@
           "name": "mode",
           "type": "dropdown",
           "values": [
-            { "id": "snapshot", "label": { "en": "Snapshot (no downtime)", "de": "Snapshot (ohne Ausfall)" } },
+            { "id": "snapshot", "label": { "en": "Snapshot", "de": "Snapshot" } },
             { "id": "suspend", "label": { "en": "Suspend", "de": "Anhalten" } },
             { "id": "stop", "label": { "en": "Stop", "de": "Stoppen" } }
           ]
@@ -83,6 +96,7 @@
         "en": "Move disk [[disk]] to [[storage]], delete source [[delete_source]]",
         "de": "Disk [[disk]] auf [[storage]] verschieben, Quelle löschen [[delete_source]]"
       },
+      "hint": { "en": "Moves the disk to another datastore. With delete source on, the original copy is removed.", "de": "Verschiebt die Disk auf einen anderen Datastore. Mit „Quelle löschen“ wird die Originalkopie entfernt." },
       "args": [
         { "name": "disk", "type": "autocomplete", "placeholder": { "en": "select disk", "de": "Disk wählen" } },
         { "name": "storage", "type": "autocomplete", "placeholder": { "en": "target storage", "de": "Ziel-Storage" } },

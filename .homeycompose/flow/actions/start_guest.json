@@ -1,6 +1,6 @@
 {
   "id": "start_guest",
-  "title": { "en": "Start a VM / container", "de": "VM / Container starten" },
+  "title": { "en": "Start a guest", "de": "Gast starten" },
   "titleFormatted": { "en": "Start [[guest]]", "de": "[[guest]] starten" },
   "hint": {
     "en": "Start any VM or container by name, without adding it as a device.",

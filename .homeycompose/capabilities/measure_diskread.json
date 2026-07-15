@@ -2,7 +2,7 @@
   "type": "number",
   "title": {
     "en": "Disk read",
-    "de": "Disk lesen"
+    "de": "Disk-Lesen"
   },
   "uiComponent": "sensor",
   "getable": true,

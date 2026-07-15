@@ -2,7 +2,7 @@
   "type": "number",
   "title": {
     "en": "Network in",
-    "de": "Netzwerk ein"
+    "de": "Netzwerk eingehend"
   },
   "uiComponent": "sensor",
   "getable": true,

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+  <g transform="scale(15)">
   <g fill="#000000">
     <path d="M32 8c12 0 20 3.6 20 8v40c0 4.4-8 8-20 8s-20-3.6-20-8V16c0-4.4 8-8 20-8zm0 4c-9.5 0-16 2.6-16 4s6.5 4 16 4 16-2.6 16-4-6.5-4-16-4z"/>
     <path d="M16 28c3.6 2.4 9.6 3.6 16 3.6S44.4 30.4 48 28v6c-3.6 2.4-9.6 3.6-16 3.6S19.6 36.4 16 34v-6z" opacity="0.8"/>
   </g>
+</g>
 </svg>

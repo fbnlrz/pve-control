@@ -1,25 +1,5 @@
-Proxmox VE for Homey
+Prox-Control brings your Proxmox VE homelab into Homey. Keep an eye on your virtual machines, containers, nodes, storage and the whole cluster with live sensors and Insights, and power them on or off, snapshot, back up and rebalance storage straight from your Flows and dashboard widgets.
 
-Monitor and control your Proxmox VE servers, virtual machines and LXC
-containers directly from Homey.
+Built for tinkerers who want their servers to feel like any other smart device at home.
 
-Features
-- Virtual machines (QEMU): start, shut down, stop, reboot, reset, suspend,
-  resume and create/roll back snapshots.
-- LXC containers: start, shut down, stop, reboot and suspend.
-- Nodes (hosts): CPU, memory, disk, swap, load average and uptime, plus
-  reboot/shutdown from Flows.
-- Storage: usage per datastore.
-- Cluster: quorum status and running VM/container counts.
-- Live sensors for CPU, memory, disk, network throughput and status, all
-  available in Insights and Flows.
-
-Setup
-1. In the Proxmox web UI, create an API token (Datacenter > Permissions >
-   API Tokens) for a user with the required privileges.
-2. Add a device in Homey, enter the host, the token ID (user@realm!tokenname)
-   and the token secret, and select the resources you want to add.
-
-The app talks to the Proxmox REST API over HTTPS. Proxmox ships a self-signed
-certificate by default, so TLS verification is off unless you enable it or
-provide your own CA certificate.
+Prox-Control is an unofficial, community-built app and is not affiliated with or endorsed by Proxmox Server Solutions GmbH.

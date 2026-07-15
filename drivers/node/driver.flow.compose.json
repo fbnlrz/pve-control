@@ -2,18 +2,18 @@
   "triggers": [
     {
       "id": "node_online",
-      "title": { "en": "Node came online", "de": "Node wurde online" }
+      "title": { "en": "Came online", "de": "Wurde online" }
     },
     {
       "id": "node_offline",
-      "title": { "en": "Node went offline", "de": "Node wurde offline" }
+      "title": { "en": "Went offline", "de": "Wurde offline" }
     }
   ],
   "conditions": [],
   "actions": [
     {
       "id": "node_reboot",
-      "title": { "en": "Reboot node", "de": "Node neu starten" },
+      "title": { "en": "Reboot", "de": "Neustarten" },
       "hint": {
         "en": "Reboots the physical Proxmox host. Use with care.",
         "de": "Startet den physischen Proxmox-Host neu. Mit Vorsicht verwenden."
@@ -21,7 +21,7 @@
     },
     {
       "id": "node_shutdown",
-      "title": { "en": "Shut down node", "de": "Node herunterfahren" },
+      "title": { "en": "Shut down", "de": "Herunterfahren" },
       "hint": {
         "en": "Shuts down the physical Proxmox host. Use with care.",
         "de": "Fährt den physischen Proxmox-Host herunter. Mit Vorsicht verwenden."

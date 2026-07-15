@@ -7,12 +7,12 @@
     "local"
   ],
   "name": {
-    "en": "PVE-Control",
-    "de": "PVE-Control"
+    "en": "Prox-Control",
+    "de": "Prox-Control"
   },
   "description": {
-    "en": "Monitor and control your Proxmox VE servers, virtual machines and containers.",
-    "de": "Überwache und steuere deine Proxmox-VE-Server, virtuellen Maschinen und Container."
+    "en": "Bring your Proxmox homelab into Homey with live sensors, control and widgets.",
+    "de": "Hol dein Proxmox-Homelab in Homey – mit Live-Sensoren, Steuerung und Widgets."
   },
   "tags": {
     "en": [
@@ -49,6 +49,10 @@
     "email": "frlrnzn@gmail.com"
   },
   "source": "https://github.com/fbnlrz/pve-control",
+  "homepage": "https://github.com/fbnlrz/pve-control",
   "support": "https://github.com/fbnlrz/pve-control/issues",
+  "bugs": {
+    "url": "https://github.com/fbnlrz/pve-control/issues"
+  },
   "homeyCommunityTopicId": 157223
 }

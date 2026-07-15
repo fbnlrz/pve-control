@@ -1,9 +1,10 @@
 {
   "1.0.0": {
-    "en": "First release of PVE-Control. Monitor and control Proxmox VE virtual machines, LXC containers, nodes, storage and the cluster from Homey: live sensors (CPU, memory, disk, network and disk I/O, uptime, status) with icons and Insights, Flow cards, disk-move actions and an optional automatic storage balancer.",
-    "de": "Erste Version von PVE-Control. Proxmox-VE-VMs, LXC-Container, Nodes, Storage und Cluster in Homey überwachen und steuern: Live-Sensoren (CPU, RAM, Disk, Netzwerk und Disk-I/O, Betriebszeit, Status) mit Icons und Insights, Flow-Karten, Disk-Verschiebe-Aktionen und optionaler automatischer Storage-Balancer."
+    "en": "First release of Prox-Control. Monitor and control Proxmox VE virtual machines, LXC containers, nodes, storage and the cluster from Homey: live sensors (CPU, memory, disk, network and disk I/O, uptime, status) with icons and Insights, Flow cards, disk-move actions and an optional automatic storage balancer.",
+    "de": "Erste Version von Prox-Control. Proxmox-VE-VMs, LXC-Container, Nodes, Storage und Cluster in Homey überwachen und steuern: Live-Sensoren (CPU, RAM, Disk, Netzwerk und Disk-I/O, Betriebszeit, Status) mit Icons und Insights, Flow-Karten, Disk-Verschiebe-Aktionen und optionaler automatischer Storage-Balancer."
   },
   "1.1.0": {
-    "en": "bugfixes and new widgets"
+    "en": "New dashboard widgets, disk I/O sensors and a guest IP address sensor, plus bug fixes.",
+    "de": "Neue Dashboard-Widgets, Disk-I/O-Sensoren und ein Sensor für die Gast-IP-Adresse sowie Fehlerbehebungen."
   }
 }

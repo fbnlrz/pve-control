@@ -2,11 +2,11 @@
   "triggers": [
     {
       "id": "lxc_started",
-      "title": { "en": "Container started", "de": "Container gestartet" }
+      "title": { "en": "Started", "de": "Gestartet" }
     },
     {
       "id": "lxc_stopped",
-      "title": { "en": "Container stopped", "de": "Container gestoppt" }
+      "title": { "en": "Stopped", "de": "Gestoppt" }
     },
     {
       "id": "lxc_status_changed",
@@ -25,13 +25,21 @@
     {
       "id": "lxc_is_running",
       "title": { "en": "Is running", "de": "Läuft" },
-      "titleFormatted": { "en": "Container !{{is|isn't}} running", "de": "Container !{{läuft|läuft nicht}}" }
+      "titleFormatted": { "en": "!{{Is|Isn't}} running", "de": "!{{Läuft|Läuft nicht}}" }
     }
   ],
   "actions": [
     { "id": "lxc_start", "title": { "en": "Start", "de": "Starten" } },
-    { "id": "lxc_shutdown", "title": { "en": "Shut down (graceful)", "de": "Herunterfahren (regulär)" } },
-    { "id": "lxc_stop", "title": { "en": "Stop (force)", "de": "Stoppen (hart)" } },
+    {
+      "id": "lxc_shutdown",
+      "title": { "en": "Shut down", "de": "Herunterfahren" },
+      "hint": { "en": "Sends a graceful shutdown request.", "de": "Sendet eine reguläre Herunterfahren-Anfrage." }
+    },
+    {
+      "id": "lxc_stop",
+      "title": { "en": "Stop", "de": "Stoppen" },
+      "hint": { "en": "Immediately stops the container; unsaved data may be lost.", "de": "Stoppt den Container sofort; ungespeicherte Daten können verloren gehen." }
+    },
     { "id": "lxc_reboot", "title": { "en": "Reboot", "de": "Neustarten" } },
     { "id": "lxc_suspend", "title": { "en": "Suspend", "de": "Pausieren" } },
     { "id": "lxc_resume", "title": { "en": "Resume", "de": "Fortsetzen" } },
@@ -44,13 +52,14 @@
       },
       "args": [
         { "name": "name", "type": "text", "placeholder": { "en": "snapshot name", "de": "Snapshot-Name" } },
-        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description (optional)", "de": "Beschreibung (optional)" } }
+        { "name": "description", "type": "text", "required": false, "placeholder": { "en": "description", "de": "Beschreibung" } }
       ]
     },
     {
       "id": "lxc_rollback_snapshot",
       "title": { "en": "Roll back to snapshot", "de": "Auf Snapshot zurücksetzen" },
       "titleFormatted": { "en": "Roll back to [[snapshot]]", "de": "Zurücksetzen auf [[snapshot]]" },
+      "hint": { "en": "Discards all changes made since the snapshot was taken.", "de": "Verwirft alle Änderungen seit dem Snapshot." },
       "args": [
         { "name": "snapshot", "type": "autocomplete", "placeholder": { "en": "select snapshot", "de": "Snapshot wählen" } }
       ]
@@ -59,8 +68,8 @@
       "id": "lxc_backup",
       "title": { "en": "Create backup", "de": "Backup erstellen" },
       "titleFormatted": {
-        "en": "Back up to [[storage]] (mode [[mode]])",
-        "de": "Backup auf [[storage]] (Modus [[mode]])"
+        "en": "Back up to [[storage]] in [[mode]] mode",
+        "de": "Backup auf [[storage]] im Modus [[mode]]"
       },
       "args": [
         { "name": "storage", "type": "autocomplete", "placeholder": { "en": "backup storage", "de": "Backup-Storage" } },
@@ -68,7 +77,7 @@
           "name": "mode",
           "type": "dropdown",
           "values": [
-            { "id": "snapshot", "label": { "en": "Snapshot (no downtime)", "de": "Snapshot (ohne Ausfall)" } },
+            { "id": "snapshot", "label": { "en": "Snapshot", "de": "Snapshot" } },
             { "id": "suspend", "label": { "en": "Suspend", "de": "Anhalten" } },
             { "id": "stop", "label": { "en": "Stop", "de": "Stoppen" } }
           ]

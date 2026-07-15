@@ -2,7 +2,7 @@
   "type": "number",
   "title": {
     "en": "Network out",
-    "de": "Netzwerk aus"
+    "de": "Netzwerk ausgehend"
   },
   "uiComponent": "sensor",
   "getable": true,
