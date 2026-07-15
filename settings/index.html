@@ -95,6 +95,21 @@
     <input id="balanceBwLimit" class="homey-form-input" type="number" value="0" min="0" />
   </div>
 
+  <div class="field">
+    <label class="homey-form-checkbox">
+      <input id="balanceIncludeNetwork" type="checkbox" class="homey-form-checkbox-input" />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="settings.balance.includeNetwork">Also move onto network storage (NFS/SMB)</span>
+    </label>
+    <div class="hint" data-i18n="settings.balance.includeNetworkHint">Off by default — network shares (NFS, CIFS/SMB, GlusterFS, CephFS) are never used as a move target.</div>
+  </div>
+
+  <div class="field">
+    <label class="homey-form-label" data-i18n="settings.balance.exclude">Never move onto these storages</label>
+    <input id="balanceExcludeStorages" class="homey-form-input" type="text" placeholder="nas-nfs, backup-smb" />
+    <div class="hint" data-i18n="settings.balance.excludeHint">Comma-separated storage names to exclude as a move target.</div>
+  </div>
+
   <hr />
 
   <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
@@ -103,8 +118,9 @@
   <script type="text/javascript">
     function onHomeyReady(Homey) {
       var texts = ['defaultHost', 'defaultPort', 'defaultTokenId', 'defaultTokenSecret',
-        'balanceHighPct', 'balanceLowPct', 'balanceIntervalMin', 'balanceMinGb', 'balanceBwLimit'];
-      var checks = ['defaultVerifyTls', 'autoBalanceEnabled', 'balanceDryRun'];
+        'balanceHighPct', 'balanceLowPct', 'balanceIntervalMin', 'balanceMinGb', 'balanceBwLimit',
+        'balanceExcludeStorages'];
+      var checks = ['defaultVerifyTls', 'autoBalanceEnabled', 'balanceDryRun', 'balanceIncludeNetwork'];
 
       texts.forEach(function (key) {
         Homey.get(key, function (err, value) {
@@ -140,6 +156,8 @@
         Homey.set('balanceIntervalMin', num('balanceIntervalMin', 30));
         Homey.set('balanceMinGb', num('balanceMinGb', 5));
         Homey.set('balanceBwLimit', num('balanceBwLimit', 0));
+        Homey.set('balanceIncludeNetwork', document.getElementById('balanceIncludeNetwork').checked);
+        Homey.set('balanceExcludeStorages', document.getElementById('balanceExcludeStorages').value.trim());
 
         var saved = document.getElementById('saved');
         saved.style.display = 'block';

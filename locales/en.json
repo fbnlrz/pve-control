@@ -32,7 +32,11 @@
       "low": "Target below (%)",
       "interval": "Check interval (min)",
       "minGb": "Min. disk size (GB)",
-      "bw": "Bandwidth limit (KB/s, 0 = unlimited)"
+      "bw": "Bandwidth limit (KB/s, 0 = unlimited)",
+      "includeNetwork": "Also move onto network storage (NFS/SMB)",
+      "includeNetworkHint": "Off by default — network shares (NFS, CIFS/SMB, GlusterFS, CephFS) are never used as a move target.",
+      "exclude": "Never move onto these storages",
+      "excludeHint": "Comma-separated storage names to exclude as a move target."
     }
   }
 }

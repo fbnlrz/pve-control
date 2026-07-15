@@ -32,7 +32,9 @@ storage fills up.
   same node. Guardrails: **dry-run is on by default** (logs only), one move
   per node per run, only moves disks that fit the target (10% margin), and
   skips running LXC containers (their volumes require a stopped container).
-  QEMU disks move live.
+  QEMU disks move live. **Network storage (NFS, CIFS/SMB, GlusterFS, CephFS)
+  is never used as a move target** unless you opt in; a full network share is
+  still allowed as a source. You can also exclude specific storages by name.
 
 ## Architecture
 

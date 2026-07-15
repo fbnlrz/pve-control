@@ -32,7 +32,11 @@
       "low": "Ziel unter (%)",
       "interval": "Prüfintervall (Min.)",
       "minGb": "Min. Disk-Größe (GB)",
-      "bw": "Bandbreitenlimit (KB/s, 0 = unbegrenzt)"
+      "bw": "Bandbreitenlimit (KB/s, 0 = unbegrenzt)",
+      "includeNetwork": "Auch auf Netzwerk-Storage verschieben (NFS/SMB)",
+      "includeNetworkHint": "Standardmäßig aus — Netzwerkfreigaben (NFS, CIFS/SMB, GlusterFS, CephFS) werden nie als Ziel genutzt.",
+      "exclude": "Nie auf diese Storages verschieben",
+      "excludeHint": "Kommagetrennte Storage-Namen, die als Ziel ausgeschlossen werden."
     }
   }
 }
