@@ -1,0 +1,48 @@
+name: Update Homey App Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version bump
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      changelog:
+        description: Changelog (English, shown in the App Store)
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  update-version:
+    name: Update version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update version
+        uses: athombv/github-action-homey-app-update-version@master
+        id: update-version
+        with:
+          version: ${{ inputs.version }}
+          changelog: ${{ inputs.changelog }}
+
+      - name: Commit & push version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Update Homey app version to v${{ steps.update-version.outputs.version }} [skip ci]"
+          git push
+
+      - name: Summary
+        run: echo "Bumped Prox-Control to v${{ steps.update-version.outputs.version }}. Run the \"Publish Homey App\" workflow to release it." >> "$GITHUB_STEP_SUMMARY"
