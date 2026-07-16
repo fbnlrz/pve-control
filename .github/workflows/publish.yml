@@ -4,7 +4,6 @@
 # Requires the HOMEY_PAT repository secret (Settings > Secrets and variables >
 # Actions). Create a Personal Access Token at https://tools.developer.homey.app/me
 name: Publish
-
 on:
   push:
     tags:
@@ -16,7 +15,8 @@ jobs:
     name: Publish Homey App
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Validate (publish level)
         uses: athombv/github-action-homey-app-validate@master
@@ -30,4 +30,4 @@ jobs:
           personal_access_token: ${{ secrets.HOMEY_PAT }}
 
       - name: Summary
-        run: echo "Manage your app at ${{ steps.publish.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+        run: echo "Published Prox-Control — manage your app at ${{ steps.publish.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
