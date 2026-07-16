@@ -44,9 +44,15 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Update Homey App Version to v${{ steps.update_version.outputs.version }} [skip ci]"
+          # No [skip ci]: the tag below points at this commit, and [skip ci]
+          # would suppress the tag push too — meaning the Publish workflow
+          # (triggered by the v* tag) would never run.
+          git commit -m "Update Homey App Version to v${{ steps.update_version.outputs.version }}"
           git tag "v${{ steps.update_version.outputs.version }}"
-          git push origin HEAD --tags
+          # Push the bump commit, then only the new tag (not every local tag).
+          # The tag push triggers the Publish workflow.
+          git push origin HEAD
+          git push origin "v${{ steps.update_version.outputs.version }}"
 
       - name: Summary
         run: echo "Bumped Prox-Control to v${{ steps.update_version.outputs.version }}. The v-tag triggers the Publish workflow automatically." >> "$GITHUB_STEP_SUMMARY"
