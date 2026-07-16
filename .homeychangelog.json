@@ -6,5 +6,11 @@
   "1.1.0": {
     "en": "New dashboard widgets, disk I/O sensors and a guest IP address sensor, plus bug fixes.",
     "de": "Neue Dashboard-Widgets, Disk-I/O-Sensoren und ein Sensor für die Gast-IP-Adresse sowie Fehlerbehebungen."
+  },
+  "1.2.0": {
+    "en": "changes to be in homey app store guidelines (pictures, text etc.) "
+  },
+  "1.2.1": {
+    "en": "added sponsors link and workflow"
   }
 }

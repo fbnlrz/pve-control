@@ -1,11 +1,18 @@
-name: Publish Homey App
-
+# Validates and then publishes the app to the Homey App Store.
+# Runs automatically when a version tag (v*) is pushed by the Update Version
+# workflow, and can also be started manually.
+# Requires the HOMEY_PAT repository secret (Settings > Secrets and variables >
+# Actions). Create a Personal Access Token at https://tools.developer.homey.app/me
+name: Publish
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
   publish:
-    name: Publish
+    name: Publish Homey App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,8 +24,8 @@ jobs:
           level: publish
 
       - name: Publish
-        uses: athombv/github-action-homey-app-publish@master
         id: publish
+        uses: athombv/github-action-homey-app-publish@master
         with:
           personal_access_token: ${{ secrets.HOMEY_PAT }}
 
